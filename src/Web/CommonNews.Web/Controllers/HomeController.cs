@@ -1,30 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace CommonNews.Web.Controllers
+﻿namespace CommonNews.Web.Controllers
 {
-    public class HomeController : Controller
+    using System.Linq;
+    using System.Web.Mvc;
+    using Services.Data;
+    using ViewModels.Home;
+
+    public class HomeController : BaseController
     {
+        private readonly IPostsService postsService;
+
+        public HomeController(IPostsService postsService)
+        {
+            this.postsService = postsService;
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
-            return View();
-        }
+            var posts = this.postsService
+                .GetAll()
+                .ToList()
+                .Select(x => this.Mapper.Map<PostViewModel>(x))
+                .ToList();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            var viewModel = new HomeViewModel()
+            {
+                Posts = posts
+            };
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return this.View(viewModel);
         }
     }
 }

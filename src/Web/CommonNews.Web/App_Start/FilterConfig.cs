@@ -1,9 +1,8 @@
-﻿using System.Web;
-using System.Web.Mvc;
-
-namespace CommonNews.Web
+﻿namespace CommonNews.Web
 {
-    public class FilterConfig
+    using System.Web.Mvc;
+
+    public static class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
