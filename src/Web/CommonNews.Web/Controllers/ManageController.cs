@@ -4,12 +4,11 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
-
+    using Bytes2you.Validation;
+    using CommonNews.Web.ViewModels.Manage;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
-
-    using CommonNews.Web.ViewModels.Manage;
 
     [Authorize]
     public class ManageController : BaseController
@@ -27,6 +26,9 @@
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
+            Guard.WhenArgument(userManager, "ApplicationUserManager").IsNull().Throw();
+            Guard.WhenArgument(signInManager, "ApplicationSignInManager").IsNull().Throw();
+
             this.UserManager = userManager;
             this.SignInManager = signInManager;
         }
