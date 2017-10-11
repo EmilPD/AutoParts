@@ -1,0 +1,23 @@
+﻿@using CommonNews.Web.ViewModels.Home
+@model HomeViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<h1>Welcome</h1>
+
+<hr />
+<div class="row">
+    @foreach (var post in Model.Posts)
+    {
+        @Html.Partial("_CompactPostPartial", post);
+    }
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post, null))
+    {
+        @Html.Partial("_PostEditPartial", Model.Posts.First());
+        <button type="submit">Submit!</button>
+    }
+</div>
