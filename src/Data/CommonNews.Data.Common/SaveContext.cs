@@ -1,6 +1,7 @@
 ﻿namespace CommonNews.Data.Common
 {
-    using CommonNews.Data.Common.Contracts;
+    using Bytes2you.Validation;
+    using Contracts;
 
     public class SaveContext : ISaveContext
     {
@@ -8,6 +9,8 @@
 
         public SaveContext(MsSqlDbContext context)
         {
+            Guard.WhenArgument(context, "MsSqlDbContext").IsNull().Throw();
+
             this.context = context;
         }
 
