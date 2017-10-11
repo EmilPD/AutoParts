@@ -5,9 +5,9 @@
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [StringLength(100)]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Common.GlobalConstants.PasswordMinLength)]
@@ -19,5 +19,10 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
 }
