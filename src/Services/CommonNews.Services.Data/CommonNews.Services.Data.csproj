@@ -44,12 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\BaseDataService{T}.cs" />
-    <Compile Include="Common\BaseDataWithCreatorService{T}.cs" />
-    <Compile Include="Common\Contracts\IBaseDataService{T}.cs" />
-    <Compile Include="Common\Contracts\IBaseDataWithCreatorService{T}.cs" />
-    <Compile Include="IPostsService.cs" />
-    <Compile Include="PostsService.cs" />
+    <Compile Include="Common\DataService{T}.cs" />
+    <Compile Include="Common\Contracts\IDataService{T}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
