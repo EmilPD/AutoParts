@@ -1,0 +1,51 @@
+﻿@using CommonNews.Web.ViewModels.Post
+@model IEnumerable<PostViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Image
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var post in Model) {
+    <tr>
+        <td>
+            <a href="/posts/details/@post.Id">
+                <img class="post-image" src="@post.ImageUrl" alt="post image" />
+            </a>
+        </td>
+        <td>
+            <a href="/posts/details/@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => post.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => post.ImageUrl)
+        </td>
+        <td>
+        </td>
+    </tr>
+}
+
+</table>
