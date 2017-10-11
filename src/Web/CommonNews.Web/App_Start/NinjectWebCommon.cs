@@ -18,6 +18,7 @@ namespace CommonNews.Web.App_Start
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Common;
     using Services.Data;
+    using Services.Data.Common.Contracts;
 
     public static class NinjectWebCommon
     {
@@ -85,11 +86,11 @@ namespace CommonNews.Web.App_Start
                  .BindDefaultInterface();
             });
 
+            kernel.Bind(typeof(IDataService<>)).To(typeof(DataService<>));
+
             kernel.Bind(typeof(DbContext), typeof(MsSqlDbContext)).To<MsSqlDbContext>().InRequestScope();
             kernel.Bind(typeof(IEfRepository<>)).To(typeof(EfRepository<>)).InRequestScope();
             kernel.Bind<ISaveContext>().To<SaveContext>();
-            kernel.Bind<IPostsService>().To<PostsService>();
-            kernel.Bind<PostsService>().ToSelf().InRequestScope();
             kernel.Bind<IMapper>().To<Mapper>();
         }
     }
