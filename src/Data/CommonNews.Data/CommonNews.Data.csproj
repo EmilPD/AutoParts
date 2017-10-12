@@ -67,6 +67,14 @@
     <Compile Include="Migrations\201710091216044_AddedModels.Designer.cs">
       <DependentUpon>201710091216044_AddedModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710111722250_AddedDataAnnotations.cs" />
+    <Compile Include="Migrations\201710111722250_AddedDataAnnotations.Designer.cs">
+      <DependentUpon>201710111722250_AddedDataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710111755567_ChangeDateTimetoType2.cs" />
+    <Compile Include="Migrations\201710111755567_ChangeDateTimetoType2.Designer.cs">
+      <DependentUpon>201710111755567_ChangeDateTimetoType2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,6 +112,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710091216044_AddedModels.resx">
       <DependentUpon>201710091216044_AddedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710111722250_AddedDataAnnotations.resx">
+      <DependentUpon>201710111722250_AddedDataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710111755567_ChangeDateTimetoType2.resx">
+      <DependentUpon>201710111755567_ChangeDateTimetoType2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
