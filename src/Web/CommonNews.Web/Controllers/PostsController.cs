@@ -63,7 +63,7 @@
             var categories = this.categoriesService.GetAll().ToList();
             var viewModel = new PostFormViewModel
             {
-                Post = new Post(),
+                Post = new PostViewModel(),
                 Categories = categories
             };
 
@@ -121,9 +121,10 @@
             }
 
             var categories = this.categoriesService.GetAll().ToList();
+            var postViewModel = this.Mapper.Map<PostViewModel>(post);
             var viewModel = new PostFormViewModel
             {
-                Post = post,
+                Post = postViewModel,
                 Categories = categories
             };
 

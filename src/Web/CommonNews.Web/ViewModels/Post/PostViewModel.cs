@@ -6,7 +6,7 @@
     using Data.Models;
     using Infrastructure.Mapping;
 
-    public class PostViewModel : IMapFrom<Post>, IHaveCustomMappings
+    public class PostViewModel : IMapFrom<Post>, IMapTo<Post>, IHaveCustomMappings
     {
         public int Id { get; set; }
 

@@ -7,6 +7,6 @@
     {
         public IEnumerable<PostCategory> Categories { get; set; }
 
-        public Post Post { get; set; }
+        public PostViewModel Post { get; set; }
     }
 }
