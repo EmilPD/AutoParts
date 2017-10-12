@@ -86,12 +86,12 @@ namespace CommonNews.Web.App_Start
                  .BindDefaultInterface();
             });
 
-            kernel.Bind(typeof(IDataService<>)).To(typeof(DataService<>));
+            kernel.Bind(typeof(IDataService<>)).To(typeof(DataService<>)).InRequestScope();
 
             kernel.Bind(typeof(DbContext), typeof(MsSqlDbContext)).To<MsSqlDbContext>().InRequestScope();
             kernel.Bind(typeof(IEfRepository<>)).To(typeof(EfRepository<>)).InRequestScope();
-            kernel.Bind<ISaveContext>().To<SaveContext>();
-            kernel.Bind<IMapper>().To<Mapper>();
+            kernel.Bind<ISaveContext>().To<SaveContext>().InRequestScope();
+            kernel.Bind<IMapper>().To<Mapper>().InRequestScope();
         }
     }
 }

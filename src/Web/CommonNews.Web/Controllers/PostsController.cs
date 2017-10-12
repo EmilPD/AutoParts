@@ -8,7 +8,7 @@
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
     using ViewModels.Post;
-
+    using System;
     public class PostsController : BaseController
     {
         private readonly IDataService<Post> postsService;
@@ -60,14 +60,14 @@
         [Authorize]
         public ActionResult Create()
         {
-            //var categories = this.categoriesService.GetAll().ToList();
-            //var viewModel = new PostFormViewModel
-            //{
-            //    Post = new Post(),
-            //    Categories = categories
-            //};
+            var categories = this.categoriesService.GetAll().ToList();
+            var viewModel = new PostFormViewModel
+            {
+                Post = new Post(),
+                Categories = categories
+            };
 
-            return this.View();
+            return this.View(viewModel);
         }
 
         // POST: Posts/Create
@@ -76,29 +76,37 @@
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Post post)
+        public ActionResult Create(PostFormViewModel postFormViewModel)
         {
-            if (this.ModelState.IsValid)
+            var userId = this.User.Identity.GetUserId();
+            var user = this.usersService.GetById(userId);
+            var categoryId = int.Parse(this.Request["Post.Category"]);
+            var category = this.categoriesService.GetById(categoryId);
+
+            postFormViewModel.Post.Author = user;
+            postFormViewModel.Post.Category = category;
+
+            if (postFormViewModel.Post.ImageUrl == null)
             {
-                var userId = this.User.Identity.GetUserId();
-                var user = this.usersService.GetById(userId);
-                var categoryId = int.Parse(this.Request["Post.Category"]);
-                var category = this.categoriesService.GetById(categoryId);
-
-                post.Author = user;
-                post.Category = category;
-
-                if (post.ImageUrl == null)
-                {
-                    post.ImageUrl = "/Content/images/default.jpg";
-                }
-
-                this.postsService.Add(post);
-
-                return this.RedirectToAction("Index");
+                postFormViewModel.Post.ImageUrl = "/Content/images/default.jpg";
             }
 
-            return this.View(post);
+            //var newPost = new Post
+            //{
+            //    Author = user,
+            //    Category = category,
+            //    Title = postFormViewModel.Post.Title,
+            //    Content = postFormViewModel.Post.Content,
+            //    IsDeleted = false,
+            //    ImageUrl = postFormViewModel.Post.ImageUrl,
+            //    CreatedOn = DateTime.UtcNow
+            //};
+
+            var newPost = this.Mapper.Map<Post>(postFormViewModel.Post);
+
+            this.postsService.Add(newPost);
+
+            return this.RedirectToAction("Index");
         }
 
         // GET: Posts/Edit/5
@@ -112,7 +120,14 @@
                 return this.HttpNotFound();
             }
 
-            return this.View(post);
+            var categories = this.categoriesService.GetAll().ToList();
+            var viewModel = new PostFormViewModel
+            {
+                Post = post,
+                Categories = categories
+            };
+
+            return this.View(viewModel);
         }
 
         // POST: Posts/Edit/5
@@ -121,16 +136,18 @@
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,ImageUrl,CreatedOn")] Post post)
+        public ActionResult Edit(PostFormViewModel postFormViewModel)
         {
-            if (this.ModelState.IsValid)
+            if (postFormViewModel.Post.ImageUrl == null)
             {
-                this.postsService.Update(post);
-
-                return this.RedirectToAction("Index");
+                postFormViewModel.Post.ImageUrl = "/Content/images/default.jpg";
             }
 
-            return this.View(post);
+            var editPost = this.Mapper.Map<Post>(postFormViewModel.Post);
+
+            this.postsService.Update(editPost);
+
+            return this.RedirectToAction("Index");
         }
 
         // GET: Posts/Delete/5
