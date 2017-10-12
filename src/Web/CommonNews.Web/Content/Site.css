@@ -26,3 +26,7 @@ textarea {
 img.compact-post-image {
     width: 100%;
 }
+
+.post-image {
+    width: 15rem;
+}
