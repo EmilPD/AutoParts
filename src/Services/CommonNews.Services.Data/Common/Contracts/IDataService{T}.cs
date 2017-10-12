@@ -11,7 +11,7 @@
 
         void Update(T item);
 
-        void Delete(int id);
+        void Delete(object id);
 
         IQueryable<T> GetAll();
 
