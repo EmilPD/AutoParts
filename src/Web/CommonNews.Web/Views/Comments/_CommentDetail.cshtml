@@ -1,12 +1,12 @@
 ﻿@model CommonNews.Web.ViewModels.Comment.CommentViewModel
 
-<div class="media">
-    <div class="media-body">
-        <h4 class="media-heading">
+<div class="comment">
+    <div class="comment-body">
+        <h4 class="comment-heading">
             <span class="post-author">Posted by: @Model.AuthorUsername</span>
-            <span class="post-commented-on">@Html.DisplayFor(model => model.CommentedOn)</span>
+            <span class="post-commented-on">on @Html.DisplayFor(model => model.CommentedOn)</span>
         </h4>
-        <p>@Model.Content</p>
+        <p class="comment-content">@Model.Content</p>
     </div>
 </div>
 <hr />

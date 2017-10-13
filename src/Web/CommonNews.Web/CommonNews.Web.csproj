@@ -358,7 +358,6 @@
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Comments\All.cshtml" />
     <Content Include="Views\Comments\_CommentDetail.cshtml" />
     <Content Include="Views\Comments\_Comments.cshtml" />
     <Content Include="Views\Comments\_CreateComment.cshtml" />
