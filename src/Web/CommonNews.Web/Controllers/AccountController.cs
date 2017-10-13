@@ -5,6 +5,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Bytes2you.Validation;
+    using Common;
     using CommonNews.Data.Models;
     using CommonNews.Web.ViewModels.Account;
     using Microsoft.AspNet.Identity;
@@ -82,7 +83,7 @@
             var result =
                 await
                 this.SignInManager.PasswordSignInAsync(
-                    model.Email,
+                    model.Username,
                     model.Password,
                     model.RememberMe,
                     shouldLockout: false);
@@ -170,11 +171,11 @@
             {
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await this.UserManager.CreateAsync(user, model.Password);
-                this.UserManager.AddToRole(user.Id, "User");
 
                 if (result.Succeeded)
                 {
                     await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await this.UserManager.AddToRoleAsync(user.Id, GlobalConstants.UserRoleName);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
