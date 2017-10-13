@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201710111755567_ChangeDateTimetoType2.Designer.cs">
       <DependentUpon>201710111755567_ChangeDateTimetoType2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710130846022_SeedAdmin.cs" />
+    <Compile Include="Migrations\201710130846022_SeedAdmin.Designer.cs">
+      <DependentUpon>201710130846022_SeedAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -124,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710111755567_ChangeDateTimetoType2.resx">
       <DependentUpon>201710111755567_ChangeDateTimetoType2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710130846022_SeedAdmin.resx">
+      <DependentUpon>201710130846022_SeedAdmin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
