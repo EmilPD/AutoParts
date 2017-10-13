@@ -228,6 +228,8 @@
     <Compile Include="Areas\Admin\Models\UsersViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="App_Start\GlimpseSecurityPolicy.cs" />
@@ -235,6 +237,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Bootstrap.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginListViewModel.cs" />
@@ -244,7 +248,10 @@
     <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Comment\CommentViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
+    <Compile Include="ViewModels\Post\PostWithCommentsViewModel.cs" />
     <Compile Include="ViewModels\Post\PostFormViewModel.cs" />
     <Compile Include="ViewModels\Post\PostViewModel.cs" />
     <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
@@ -264,6 +271,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\default.jpg" />
+    <Content Include="Content\images\entertainment-1.jpg" />
+    <Content Include="Content\images\entertainment-10.jpg" />
+    <Content Include="Content\images\entertainment-2.jpg" />
+    <Content Include="Content\images\entertainment-3.jpg" />
+    <Content Include="Content\images\entertainment-4.jpg" />
+    <Content Include="Content\images\entertainment-5.jpg" />
+    <Content Include="Content\images\entertainment-6.jpg" />
+    <Content Include="Content\images\entertainment-7.jpg" />
+    <Content Include="Content\images\entertainment-8.jpg" />
+    <Content Include="Content\images\entertainment-9.jpg" />
+    <Content Include="Content\images\footer-bg.png" />
+    <Content Include="Content\images\select-arrow.png" />
+    <Content Include="Content\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -282,6 +304,10 @@
     <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="fonts\LeagueGothic.ttf" />
+    <Content Include="fonts\LeagueGothic.woff" />
+    <Content Include="fonts\League_Gothic.otf" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
@@ -332,10 +358,14 @@
     <Content Include="Views\Posts\Details.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Comments\All.cshtml" />
+    <Content Include="Views\Comments\_CommentDetail.cshtml" />
+    <Content Include="Views\Comments\_Comments.cshtml" />
+    <Content Include="Views\Comments\_CreateComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
