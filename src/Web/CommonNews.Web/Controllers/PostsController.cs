@@ -121,76 +121,30 @@
         }
 
         // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PostFormViewModel postFormViewModel)
         {
-            //var errors = this.ModelState.Values.SelectMany(v => v.Errors);
-            //if (!this.ModelState.IsValid)
-            //{
-            //    var categories = this.categoriesService.GetAll().ToList();
-            //    var postViewModel = postFormViewModel.Post;
-            //    var viewModel = new PostFormViewModel
-            //    {
-            //        Post = postViewModel,
-            //        Categories = categories
-            //    };
-
-            //    return this.View(viewModel);
-            //}
-
-            var editPost = this.Mapper.Map<Post>(postFormViewModel.Post);
-
             var postInDbId = postFormViewModel.Post.Id;
             var postInDb = this.postsService.GetById(postInDbId);
 
             var categoryId = int.Parse(this.Request["Post.Category.Id"]);
             var category = this.categoriesService.GetById(categoryId);
-            editPost.Category = category;
+            postFormViewModel.Post.Category = category;
 
-            if (editPost.ImageUrl == null)
+            if (postFormViewModel.Post.ImageUrl == null)
             {
-                editPost.ImageUrl = "/Content/images/default.jpg";
+                postFormViewModel.Post.ImageUrl = "/Content/images/default.jpg";
             }
 
-            editPost.CreatedOn = postInDb.CreatedOn;
+            postFormViewModel.Post.PostedOn = postInDb.CreatedOn;
 
+            var editPost = this.Mapper.Map(postFormViewModel.Post, postInDb);
             this.postsService.Update(editPost);
 
             return this.RedirectToAction("Index");
         }
-
-        //// POST: Posts/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(PostViewModel postFormViewModel)
-        //{
-        //    var editPost = this.Mapper.Map<Post>(postFormViewModel);
-
-        //    var postInDbId = postFormViewModel.Id;
-        //    var postInDb = this.postsService.GetById(postInDbId);
-
-        //    var categoryId = int.Parse(this.Request["Post.Category.Id"]);
-        //    var category = this.categoriesService.GetById(categoryId);
-        //    editPost.Category = category;
-
-        //    if (editPost.ImageUrl == null)
-        //    {
-        //        editPost.ImageUrl = "/Content/images/default.jpg";
-        //    }
-
-        //    editPost.CreatedOn = postInDb.CreatedOn;
-
-        //    this.postsService.Update(editPost);
-
-        //    return this.RedirectToAction("Index");
-        //}
 
         // GET: Posts/Delete/5
         [Authorize(Roles = "Admin")]
