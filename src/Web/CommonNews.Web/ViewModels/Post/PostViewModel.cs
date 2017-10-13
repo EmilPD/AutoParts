@@ -6,17 +6,19 @@
     using Data.Models;
     using Infrastructure.Mapping;
 
-    public class PostViewModel : IMapFrom<Post>, IMapTo<Post>, IHaveCustomMappings
+    public class PostViewModel : IMapBothWays<Post>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(128)]
         public string Title { get; set; }
 
+        [Required]
+        [StringLength(2500)]
         public string Content { get; set; }
 
         public PostCategory Category { get; set; }
-
-        public ApplicationUser Author { get; set; }
 
         public string AuthorUsername { get; set; }
 
@@ -29,7 +31,11 @@
         {
             configuration.CreateMap<Post, PostViewModel>()
                 .ForMember(postViewModel => postViewModel.AuthorUsername, cfg => cfg.MapFrom(post => post.Author.UserName))
+                .ForMember(postViewModel => postViewModel.Category, cfg => cfg.MapFrom(post => post.Category))
                 .ForMember(postViewModel => postViewModel.PostedOn, cfg => cfg.MapFrom(post => post.CreatedOn));
+
+            configuration.CreateMap<PostViewModel, Post>()
+                .ForMember(post => post.CreatedOn, cfg => cfg.MapFrom(postViewModel => postViewModel.PostedOn));
         }
     }
 }
