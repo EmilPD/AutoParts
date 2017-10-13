@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201710131222334_Nowo.Designer.cs">
       <DependentUpon>201710131222334_Nowo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710131510008_SeedSampleData.cs" />
+    <Compile Include="Migrations\201710131510008_SeedSampleData.Designer.cs">
+      <DependentUpon>201710131510008_SeedSampleData.cs</DependentUpon>
+    </Compile>
     <Compile Include="MsSqlDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveContext.cs" />
@@ -98,6 +102,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710131222334_Nowo.resx">
       <DependentUpon>201710131222334_Nowo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710131510008_SeedSampleData.resx">
+      <DependentUpon>201710131510008_SeedSampleData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
