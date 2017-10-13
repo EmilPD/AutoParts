@@ -51,6 +51,26 @@
             return this.View(posts);
         }
 
+        public ActionResult MyPosts()
+        {
+            var userId = this.User.Identity.GetUserId();
+            var posts = this.postsService
+                .GetAll()
+                .Where(x => x.Author.Id == userId)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .ToList()
+                .Select(x => this.Mapper.Map<PostViewModel>(x))
+                .ToList();
+
+            if (posts == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
+
+            return this.View(posts);
+        }
+
         // GET: Posts/Details/5
         public ActionResult Details(int id)
         {
@@ -58,6 +78,8 @@
                 .GetAll()
                 .Where(x => x.Id == id)
                 .Include(x => x.Comments)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
                 .FirstOrDefault();
 
             if (post == null)

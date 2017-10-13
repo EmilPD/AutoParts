@@ -1,0 +1,53 @@
+﻿@using CommonNews.Web.ViewModels.Post
+@model IEnumerable<PostViewModel>
+
+@{
+    ViewBag.Title = "MyPosts";
+}
+
+<h2>MyPosts</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Image
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            Edit / Details / Delete
+        </th>
+    </tr>
+
+@foreach (var post in Model) {
+    <tr>
+        <td>
+            <a href="/posts/details/@post.Id">
+                <img class="post-image" src="@post.ImageUrl" alt="post image" />
+            </a>
+        </td>
+        <td>
+            <a href="/posts/details/@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
+        </td>
+        <td class="my-posts-content">
+            @Html.DisplayFor(modelItem => post.Content)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = post.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = post.Id }) |
+            @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = post.Id })
+    }
+        </td>
+    </tr>
+}
+
+</table>
