@@ -1,0 +1,73 @@
+﻿@model CommonNews.Web.ViewModels.Comment.CommentViewModel
+<div class="post-comment">
+    <h3>Leave a Comment</h3>
+    @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("User"))
+    {
+        using (Html.BeginForm("Create", "Comments", new { id = Model.PostId }, FormMethod.Post, new { id = "add-comment-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Content, 8, 80, new { htmlAttributes = new { @class = "form-control", id = "comment-form-content" } })
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <p>
+            Only registered users can comment.
+        </p>
+    }
+</div>
+
+<script>
+
+    $('#add-comment-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const content = $('#comment-form-contentt').val();
+
+        $.ajax({
+            url: '/comments/create/',
+            type: 'post',
+            data: {
+                user_feedback: feedbackObj,
+                _token: $('input[name=_token]').val()
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 'success') {
+                    $('#try_again_btn_modal').click();
+                    $('#try_again_btn').click(function (e) {
+                        e.preventDefault();
+                        window.location.replace('/');
+                    });
+
+                } else if (response.status == 'error') {
+                    showImaggaErrorMessage(response.message);
+                }
+            }
+        });
+    });
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
