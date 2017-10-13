@@ -2,73 +2,68 @@
 @model PostWithCommentsViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Post.Title;
     const string CommentsPartialViewsFolder = "~/Views/Comments/{0}.cshtml";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading row">
+                <div class="col-md-12"></div>
+            </div>
+            <div class="panel-body row">
+                <article class="col-sm-12">
+                    <div class="single-post-container">
+                        <figure class="single-post-image-containter">
+                            <img class="single-post-image" src="@Model.Post.ImageUrl" alt="post image" />
+                            <figcaption>
+                                <div class="single-post-category">@Model.Post.Category.Name</div>
+                            </figcaption>
+                        </figure>
+                        <section>
+                            <div class="single-post-title" title="@Model.Post.Title">@Model.Post.Title</div>
+                            <div class="single-post-author">
+                                Posted by @Model.Post.AuthorUsername
+                                <time class="single-post-date">
+                                    <span>on @Html.DisplayFor(m => m.Post.PostedOn)</span>
+                                </time>
+                            </div>
+                            <div class="single-post-content-divider"></div>
+                            <div class="single-post-text">
+                                @Model.Post.Content
+                            </div>
+                        </section>
+                        <hr />
 
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Title)
-        </dt>
+                        <!--Start Comments-->
+                        <h3>Comments</h3>
+                        @foreach (var comment in Model.Comments)
+                        {
+                            @Html.Partial(string.Format(CommentsPartialViewsFolder, "_CommentDetail"), comment)
+                        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Post.Title)
-        </dd>
+                        @Html.Partial(string.Format(CommentsPartialViewsFolder, "_Comments"), Model.Post.Id)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Post.Content)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.Category.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Post.Category.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.ImageUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Post.ImageUrl)
-        </dd>
-    </dl>
+                        <div>
+                            <p>
+                                @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("User"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = Model.Post.Id }) @:|
+                        }
+                                @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("Delete", "Delete", new { id = Model.Post.Id }) @:|
+                        }
+                                @Html.ActionLink("Back to List", "Index")
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
-<p>
-    @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("User"))
-    {
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Post.Id }) @:|
-    }
-    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
-    {
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Post.Id }) @:|
-    }
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-<!--Start Comments-->
-<h3>Comments</h3>
-@foreach (var comment in Model.Comments)
-{
-    @Html.Partial(string.Format(CommentsPartialViewsFolder, "_CommentDetail"), comment)
-}
-
-@Html.Partial(string.Format(CommentsPartialViewsFolder, "_Comments"), Model.Post.Id)
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
