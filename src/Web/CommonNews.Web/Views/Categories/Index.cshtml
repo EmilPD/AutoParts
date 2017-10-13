@@ -1,0 +1,19 @@
+﻿@using CommonNews.Web.ViewModels.Category
+@model CategoryViewModel
+
+@{
+    ViewBag.Title = "All Posts in Category";
+}
+
+<h3>All Posts in Category - @Model.Name</h3>
+
+<div class="row category-container">
+    <div class="col-ts-12 category-posts-container">
+        <section id="compact-posts-container" class="row eq-height">
+            @foreach (var post in Model.Posts)
+            {
+                @Html.Partial("_CompactPostPartial", post);
+            }
+        </section>
+    </div>
+</div>
