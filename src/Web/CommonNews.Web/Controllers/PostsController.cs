@@ -51,6 +51,7 @@
             return this.View(posts);
         }
 
+        [Authorize]
         public ActionResult MyPosts()
         {
             var userId = this.User.Identity.GetUserId();

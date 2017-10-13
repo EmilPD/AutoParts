@@ -20,6 +20,7 @@
         [StringLength(2500)]
         public string Content { get; set; }
 
+        [Required]
         public PostCategory Category { get; set; }
 
         public ICollection<CommentViewModel> Comments { get; set; }
@@ -28,7 +29,7 @@
 
         public string ImageUrl { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:M}")]
         public DateTime PostedOn { get; set; }
 
         public void CreateMappings(IMapperConfiguration configuration)

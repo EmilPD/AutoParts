@@ -17,7 +17,7 @@
 
         public string AuthorUsername { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:M}")]
         public DateTime CommentedOn { get; set; }
 
         public void CreateMappings(IMapperConfiguration configuration)
