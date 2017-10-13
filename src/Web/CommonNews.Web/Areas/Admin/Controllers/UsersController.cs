@@ -20,6 +20,7 @@
         public UsersController(IDataService<ApplicationUser> usersService, IPaginationFactory paginationFactory)
         {
             Guard.WhenArgument(usersService, "UsersService").IsNull().Throw();
+            Guard.WhenArgument(paginationFactory, "PaginationFactory").IsNull().Throw();
 
             this.usersService = usersService;
             this.paginationFactory = paginationFactory;

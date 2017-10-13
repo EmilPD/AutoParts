@@ -1,8 +1,34 @@
 ﻿@using CommonNews.Web.ViewModels.Post
+@using CommonNews.Web.Helpers
 @model PostViewModel
-<div class="col-md-4">
-    <h2>@Model.Title</h2>
-    <img class="compact-post-image" src="@Model.ImageUrl" alt="Image" />
-    <p>@Model.Content</p>
-    <p>@Html.DisplayFor(x => Model.PostedOn) - @Model.AuthorUsername</p>
-</div>
+
+<article class="col-xs-12 col-md-6 col-lg-4 eq-height">
+    <div class="compact-post-container">
+        <div class="compact-post-content">
+            <a href="/posts/details/@Model.Id">
+                <figure class="compact-post-image-containter">
+                    <img class="compact-post-image" src="@Model.ImageUrl" alt="post image" />
+                    <div class="compact-post-inset-shadow"></div>
+                    <figcaption>
+                        <div class="compact-post-category">@Model.Category.Name</div>
+                        <time class="compact-post-date">
+                            <span>@Html.DisplayFor(m => m.PostedOn)</span>
+                        </time>
+                    </figcaption>
+                </figure>
+            </a>
+            <section>
+                <a href="/posts/details/@Model.Id">
+                    <h2 class="compact-post-title" title="@Model.Title">@Model.Title</h2>
+                </a>
+                <div class="compact-post-author">
+                    Posted by @Model.AuthorUsername
+                </div>
+                <div class="compact-post-content-divider"></div>
+                <div class="compact-post-text">
+                    @Model.Content.Limit(100)
+                </div>
+            </section>
+        </div>
+    </div>
+</article>

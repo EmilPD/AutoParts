@@ -23,11 +23,11 @@
 
         public string ImageUrl { get; set; }
 
-        public virtual ApplicationUser Author { get; set; }
+        public ApplicationUser Author { get; set; }
 
-        public virtual PostCategory Category { get; set; }
+        public PostCategory Category { get; set; }
 
-        public virtual ICollection<Comment> Comments
+        public ICollection<Comment> Comments
         {
             get { return this.comments; }
             set { this.comments = value; }

@@ -1,12 +1,15 @@
 ﻿namespace CommonNews.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Data;
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
     using Bytes2you.Validation;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
+    using ViewModels.Comment;
     using ViewModels.Post;
 
     public class PostsController : BaseController
@@ -34,9 +37,37 @@
         {
             var posts = this.postsService
                 .GetAll()
+                .Include(x => x.Author)
+                .Include(x => x.Category)
                 .ToList()
                 .Select(x => this.Mapper.Map<PostViewModel>(x))
                 .ToList();
+
+            if (posts == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
+
+            return this.View(posts);
+        }
+
+        [Authorize]
+        public ActionResult MyPosts()
+        {
+            var userId = this.User.Identity.GetUserId();
+            var posts = this.postsService
+                .GetAll()
+                .Where(x => x.Author.Id == userId)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .ToList()
+                .Select(x => this.Mapper.Map<PostViewModel>(x))
+                .ToList();
+
+            if (posts == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
 
             return this.View(posts);
         }
@@ -44,16 +75,32 @@
         // GET: Posts/Details/5
         public ActionResult Details(int id)
         {
-            Post post = this.postsService.GetById(id);
+            Post post = this.postsService
+                .GetAll()
+                .Where(x => x.Id == id)
+                .Include(x => x.Comments)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .FirstOrDefault();
 
             if (post == null)
             {
                 return this.HttpNotFound();
             }
 
+            var commentsInPost = this.Mapper
+                .Map<ICollection<CommentViewModel>>(post.Comments.Where(x => x.IsDeleted == false)
+                .ToList());
+
             var postViewModel = this.Mapper.Map<PostViewModel>(post);
 
-            return this.View(postViewModel);
+            var viewModel = new PostWithCommentsViewModel
+            {
+                Post = postViewModel,
+                Comments = commentsInPost
+            };
+
+            return this.View(viewModel);
         }
 
         // GET: Posts/Create
@@ -66,6 +113,11 @@
                 Post = new PostViewModel(),
                 Categories = categories
             };
+
+            if (viewModel == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
 
             return this.View(viewModel);
         }
@@ -102,7 +154,12 @@
         [Authorize]
         public ActionResult Edit(int id)
         {
-            Post post = this.postsService.GetById(id);
+            Post post = this.postsService
+                .GetAll()
+                .Where(x => x.Id == id)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .FirstOrDefault();
 
             if (post == null)
             {
@@ -117,80 +174,39 @@
                 Categories = categories
             };
 
+            if (viewModel == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
+
             return this.View(viewModel);
         }
 
         // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PostFormViewModel postFormViewModel)
         {
-            //var errors = this.ModelState.Values.SelectMany(v => v.Errors);
-            //if (!this.ModelState.IsValid)
-            //{
-            //    var categories = this.categoriesService.GetAll().ToList();
-            //    var postViewModel = postFormViewModel.Post;
-            //    var viewModel = new PostFormViewModel
-            //    {
-            //        Post = postViewModel,
-            //        Categories = categories
-            //    };
-
-            //    return this.View(viewModel);
-            //}
-
-            var editPost = this.Mapper.Map<Post>(postFormViewModel.Post);
-
             var postInDbId = postFormViewModel.Post.Id;
             var postInDb = this.postsService.GetById(postInDbId);
 
             var categoryId = int.Parse(this.Request["Post.Category.Id"]);
             var category = this.categoriesService.GetById(categoryId);
-            editPost.Category = category;
+            postFormViewModel.Post.Category = category;
 
-            if (editPost.ImageUrl == null)
+            if (postFormViewModel.Post.ImageUrl == null)
             {
-                editPost.ImageUrl = "/Content/images/default.jpg";
+                postFormViewModel.Post.ImageUrl = "/Content/images/default.jpg";
             }
 
-            editPost.CreatedOn = postInDb.CreatedOn;
+            postFormViewModel.Post.PostedOn = postInDb.CreatedOn;
 
+            var editPost = this.Mapper.Map(postFormViewModel.Post, postInDb);
             this.postsService.Update(editPost);
 
             return this.RedirectToAction("Index");
         }
-
-        //// POST: Posts/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(PostViewModel postFormViewModel)
-        //{
-        //    var editPost = this.Mapper.Map<Post>(postFormViewModel);
-
-        //    var postInDbId = postFormViewModel.Id;
-        //    var postInDb = this.postsService.GetById(postInDbId);
-
-        //    var categoryId = int.Parse(this.Request["Post.Category.Id"]);
-        //    var category = this.categoriesService.GetById(categoryId);
-        //    editPost.Category = category;
-
-        //    if (editPost.ImageUrl == null)
-        //    {
-        //        editPost.ImageUrl = "/Content/images/default.jpg";
-        //    }
-
-        //    editPost.CreatedOn = postInDb.CreatedOn;
-
-        //    this.postsService.Update(editPost);
-
-        //    return this.RedirectToAction("Index");
-        //}
 
         // GET: Posts/Delete/5
         [Authorize(Roles = "Admin")]

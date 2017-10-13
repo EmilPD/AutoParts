@@ -63,9 +63,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="Contracts\ISaveContext.cs" />
     <Compile Include="EfRepository{T}.cs" />
     <Compile Include="Contracts\IEfRepository{T}.cs" />
+    <Compile Include="Migrations\201710131222334_Nowo.cs" />
+    <Compile Include="Migrations\201710131222334_Nowo.Designer.cs">
+      <DependentUpon>201710131222334_Nowo.cs</DependentUpon>
+    </Compile>
     <Compile Include="MsSqlDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveContext.cs" />
@@ -89,6 +94,11 @@
       <Project>{048df115-fad9-4bd4-9ba0-d99dfd32a2b2}</Project>
       <Name>CommonNews.Data.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710131222334_Nowo.resx">
+      <DependentUpon>201710131222334_Nowo.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

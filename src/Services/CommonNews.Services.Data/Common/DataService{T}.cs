@@ -55,12 +55,12 @@
 
         public virtual IQueryable<T> GetAll()
         {
-            return this.Data.All();
+            return this.Data.All().OrderByDescending(x => x.CreatedOn);
         }
 
         public virtual IQueryable<T> Get(int count)
         {
-            return this.Data.All().Take(count);
+            return this.Data.All().OrderByDescending(x => x.CreatedOn).Take(count);
         }
 
         public virtual T GetById(object id)

@@ -2,50 +2,18 @@
 @model IEnumerable<PostViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "All Posts";
 }
 
-<h2>Index</h2>
+<h2>All Posts</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Image
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var post in Model) {
-    <tr>
-        <td>
-            <a href="/posts/details/@post.Id">
-                <img class="post-image" src="@post.ImageUrl" alt="post image" />
-            </a>
-        </td>
-        <td>
-            <a href="/posts/details/@post.Id">@Html.DisplayFor(modelItem => post.Title)</a>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => post.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => post.ImageUrl)
-        </td>
-        <td>
-        </td>
-    </tr>
-}
-
-</table>
+<div class="row category-container">
+    <div class="col-ts-12 category-posts-container">
+        <section id="compact-posts-container" class="row eq-height">
+            @foreach (var post in Model)
+            {
+                @Html.Partial("_CompactPostPartial", post);
+            }
+        </section>
+    </div>
+</div>

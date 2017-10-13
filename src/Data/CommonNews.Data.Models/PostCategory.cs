@@ -15,9 +15,10 @@
 
         [Required]
         [StringLength(128)]
+        [Display(Name = "Category")]
         public string Name { get; set; }
 
-        public virtual ICollection<Post> Posts
+        public ICollection<Post> Posts
         {
             get { return this.posts; }
             set { this.posts = value; }

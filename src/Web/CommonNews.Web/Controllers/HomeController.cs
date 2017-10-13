@@ -1,8 +1,11 @@
 ﻿namespace CommonNews.Web.Controllers
 {
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.UI;
     using Bytes2you.Validation;
+    using Common;
     using Data.Models;
     using Services.Data;
     using Services.Data.Common.Contracts;
@@ -21,12 +24,13 @@
         }
 
         [HttpGet]
+        [OutputCache(Duration = 60, Location = OutputCacheLocation.Server, VaryByParam = "*")]
         public ActionResult Index()
         {
-            int count = 2;
-
             var posts = this.postsService
-                .Get(count)
+                .Get(GlobalConstants.PostsCountOnHomePage)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
                 .ToList()
                 .Select(x => this.Mapper.Map<PostViewModel>(x))
                 .ToList();

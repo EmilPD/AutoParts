@@ -1,0 +1,12 @@
+﻿@model int
+@using CommonNews.Web.ViewModels.Comment;
+
+@{
+    const string CommentsPartialViewsFolder = "~/Views/Comments/{0}.cshtml";
+}
+
+<section id="comments"></section>
+
+<section id="new-comment">
+    @Html.Partial(string.Format(CommentsPartialViewsFolder, "_CreateComment"), new CommentViewModel { PostId = Model })
+</section>
