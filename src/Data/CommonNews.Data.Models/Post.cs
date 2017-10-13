@@ -1,6 +1,7 @@
 ﻿namespace CommonNews.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Abstract;
 
     public class Post : BaseModel<int>
@@ -12,8 +13,12 @@
             this.comments = new HashSet<Comment>();
         }
 
+        [Required]
+        [StringLength(128)]
         public string Title { get; set; }
 
+        [Required]
+        [StringLength(2500)]
         public string Content { get; set; }
 
         public string ImageUrl { get; set; }

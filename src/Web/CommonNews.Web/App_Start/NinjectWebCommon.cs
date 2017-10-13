@@ -7,6 +7,7 @@ namespace CommonNews.Web.App_Start
     using System.Data.Entity;
     using System.Web;
     using AutoMapper;
+    using Common.Contracts;
     using Data.Common;
     using Data.Common.Contracts;
     using Data.Models;
@@ -16,8 +17,10 @@ namespace CommonNews.Web.App_Start
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
+    using Ninject.Extensions.Factory;
     using Ninject.Web.Common;
     using Services.Data;
+    using Services.Data.Common.Contracts;
 
     public static class NinjectWebCommon
     {
@@ -85,12 +88,13 @@ namespace CommonNews.Web.App_Start
                  .BindDefaultInterface();
             });
 
+            kernel.Bind(typeof(IDataService<>)).To(typeof(DataService<>)).InRequestScope();
+
             kernel.Bind(typeof(DbContext), typeof(MsSqlDbContext)).To<MsSqlDbContext>().InRequestScope();
             kernel.Bind(typeof(IEfRepository<>)).To(typeof(EfRepository<>)).InRequestScope();
-            kernel.Bind<ISaveContext>().To<SaveContext>();
-            kernel.Bind<IPostsService>().To<PostsService>();
-            kernel.Bind<PostsService>().ToSelf().InRequestScope();
-            kernel.Bind<IMapper>().To<Mapper>();
+            kernel.Bind<ISaveContext>().To<SaveContext>().InRequestScope();
+            kernel.Bind<IMapper>().To<Mapper>().InRequestScope();
+            kernel.Bind<IPaginationFactory>().ToFactory().InSingletonScope();
         }
     }
 }

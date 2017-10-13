@@ -1,6 +1,7 @@
 ﻿namespace CommonNews.Data.Migrations
 {
     using System.Data.Entity.Migrations;
+    using Bytes2you.Validation;
     using Common;
 
     public sealed class Configuration : DbMigrationsConfiguration<MsSqlDbContext>
@@ -13,6 +14,7 @@
 
         protected override void Seed(MsSqlDbContext context)
         {
+            Guard.WhenArgument(context, "MsSqlDbContext").IsNull().Throw();
         }
     }
 }

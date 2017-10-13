@@ -4,13 +4,12 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
-
+    using Bytes2you.Validation;
+    using CommonNews.Data.Models;
+    using CommonNews.Web.ViewModels.Account;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
-
-    using CommonNews.Data.Models;
-    using CommonNews.Web.ViewModels.Account;
 
     [Authorize]
     public class AccountController : BaseController
@@ -24,6 +23,9 @@
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
+            Guard.WhenArgument(userManager, "ApplicationUserManager").IsNull().Throw();
+            Guard.WhenArgument(signInManager, "ApplicationSignInManager").IsNull().Throw();
+
             this.UserManager = userManager;
             this.SignInManager = signInManager;
         }
@@ -166,8 +168,10 @@
         {
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await this.UserManager.CreateAsync(user, model.Password);
+                this.UserManager.AddToRole(user.Id, "User");
+
                 if (result.Succeeded)
                 {
                     await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

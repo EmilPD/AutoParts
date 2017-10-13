@@ -11,13 +11,16 @@
         [Key]
         public TKey Id { get; set; }
 
+        [Column(TypeName = "DateTime2")]
         public DateTime CreatedOn { get; set; }
 
+        [Column(TypeName = "DateTime2")]
         public DateTime? ModifiedOn { get; set; }
 
         [Index]
         public bool IsDeleted { get; set; }
 
+        [Column(TypeName = "DateTime2")]
         public DateTime? DeletedOn { get; set; }
     }
 }

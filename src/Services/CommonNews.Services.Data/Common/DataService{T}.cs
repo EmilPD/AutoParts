@@ -2,16 +2,19 @@
 {
     using System;
     using System.Linq;
-
+    using Bytes2you.Validation;
     using Common.Contracts;
     using CommonNews.Data.Common.Contracts;
     using CommonNews.Data.Models.Contracts;
 
-    public abstract class BaseDataService<T> : IBaseDataService<T>
+    public class DataService<T> : IDataService<T>
         where T : class, IDeletableEntity, IAuditInfo
     {
-        public BaseDataService(IEfRepository<T> repo, ISaveContext context)
+        public DataService(IEfRepository<T> repo, ISaveContext context)
         {
+            Guard.WhenArgument(repo, "IEfRepository").IsNull().Throw();
+            Guard.WhenArgument(context, "ISaveContext").IsNull().Throw();
+
             this.Data = repo;
             this.Context = context;
         }
@@ -22,12 +25,24 @@
 
         public virtual void Add(T item)
         {
+            Guard.WhenArgument(item, "Add item").IsNull().Throw();
+
             this.Data.Add(item);
+            this.Context.Commit();
+        }
+
+        public void Update(T item)
+        {
+            Guard.WhenArgument(item, "Update item").IsNull().Throw();
+
+            this.Data.Update(item);
             this.Context.Commit();
         }
 
         public virtual void Delete(object id)
         {
+            Guard.WhenArgument(id, "Delete object with id").IsNull().Throw();
+
             var entity = this.Data.GetById(id);
             if (entity == null)
             {
@@ -43,8 +58,15 @@
             return this.Data.All();
         }
 
+        public virtual IQueryable<T> Get(int count)
+        {
+            return this.Data.All().Take(count);
+        }
+
         public virtual T GetById(object id)
         {
+            Guard.WhenArgument(id, "GetById").IsNull().Throw();
+
             return this.Data.GetById(id);
         }
 

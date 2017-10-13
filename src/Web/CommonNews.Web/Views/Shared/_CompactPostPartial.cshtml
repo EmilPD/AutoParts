@@ -1,8 +1,8 @@
-﻿@using CommonNews.Web.ViewModels.Home
+﻿@using CommonNews.Web.ViewModels.Post
 @model PostViewModel
 <div class="col-md-4">
     <h2>@Model.Title</h2>
     <img class="compact-post-image" src="@Model.ImageUrl" alt="Image" />
     <p>@Model.Content</p>
-    <p>@Html.DisplayFor(x => Model.PostedOn) - @Model.AuthorEmail</p>
+    <p>@Html.DisplayFor(x => Model.PostedOn) - @Model.AuthorUsername</p>
 </div>

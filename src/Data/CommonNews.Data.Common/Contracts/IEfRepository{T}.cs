@@ -1,7 +1,6 @@
 ﻿namespace CommonNews.Data.Common.Contracts
 {
     using System.Linq;
-
     using Models.Contracts;
 
     public interface IEfRepository<T>

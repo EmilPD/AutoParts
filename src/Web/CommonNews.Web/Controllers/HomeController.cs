@@ -2,23 +2,31 @@
 {
     using System.Linq;
     using System.Web.Mvc;
+    using Bytes2you.Validation;
+    using Data.Models;
     using Services.Data;
+    using Services.Data.Common.Contracts;
     using ViewModels.Home;
+    using ViewModels.Post;
 
     public class HomeController : BaseController
     {
-        private readonly IPostsService postsService;
+        private readonly IDataService<Post> postsService;
 
-        public HomeController(IPostsService postsService)
+        public HomeController(DataService<Post> postsService)
         {
+            Guard.WhenArgument(postsService, "PostsService").IsNull().Throw();
+
             this.postsService = postsService;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
+            int count = 2;
+
             var posts = this.postsService
-                .GetAll()
+                .Get(count)
                 .ToList()
                 .Select(x => this.Mapper.Map<PostViewModel>(x))
                 .ToList();
