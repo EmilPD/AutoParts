@@ -6,7 +6,7 @@
         {
             if (!string.IsNullOrEmpty(input) && input.Length > max)
             {
-                return input.Substring(0, max);
+                return input.Substring(0, max) + "...";
             }
 
             return input;
