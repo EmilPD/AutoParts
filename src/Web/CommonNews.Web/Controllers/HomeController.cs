@@ -3,6 +3,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.UI;
     using Bytes2you.Validation;
     using Common;
     using Data.Models;
@@ -10,7 +11,7 @@
     using Services.Data.Common.Contracts;
     using ViewModels.Home;
     using ViewModels.Post;
-    using System.Web.UI;
+
     public class HomeController : BaseController
     {
         private readonly IDataService<Post> postsService;

@@ -55,7 +55,7 @@
     }
     @if (ViewContext.HttpContext.User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Post.Id }); @:|
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Post.Id }) @:|
     }
     @Html.ActionLink("Back to List", "Index")
 </p>
@@ -68,3 +68,8 @@
 }
 
 @Html.Partial(string.Format(CommentsPartialViewsFolder, "_Comments"), Model.Post.Id)
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

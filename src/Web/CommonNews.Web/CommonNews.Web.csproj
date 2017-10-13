@@ -237,7 +237,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Bootstrap.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Account\ForgotPasswordViewModel.cs" />
@@ -363,6 +362,7 @@
     <Content Include="Views\Comments\_CommentDetail.cshtml" />
     <Content Include="Views\Comments\_Comments.cshtml" />
     <Content Include="Views\Comments\_CreateComment.cshtml" />
+    <Content Include="Views\Posts\MyPosts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Shared\" />

@@ -4,17 +4,19 @@
     @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("User"))
     {
         using (Html.BeginForm("Create", "Comments", new { id = Model.PostId }, FormMethod.Post, new { id = "add-comment-form" }))
+        //using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.PostId, new { id = "post-id" })
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Content, new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Content, 8, 80, new { htmlAttributes = new { @class = "form-control", id = "comment-form-content" } })
+                        @Html.TextAreaFor(model => model.Content, 8, 80, new { @class = "form-control", id = "comment-form-content" })
                         @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -35,39 +37,3 @@
         </p>
     }
 </div>
-
-<script>
-
-    $('#add-comment-form').on('submit', function (e) {
-        e.preventDefault();
-
-        const content = $('#comment-form-contentt').val();
-
-        $.ajax({
-            url: '/comments/create/',
-            type: 'post',
-            data: {
-                user_feedback: feedbackObj,
-                _token: $('input[name=_token]').val()
-            },
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == 'success') {
-                    $('#try_again_btn_modal').click();
-                    $('#try_again_btn').click(function (e) {
-                        e.preventDefault();
-                        window.location.replace('/');
-                    });
-
-                } else if (response.status == 'error') {
-                    showImaggaErrorMessage(response.message);
-                }
-            }
-        });
-    });
-
-</script>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

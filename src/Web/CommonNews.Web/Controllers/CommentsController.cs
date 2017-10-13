@@ -49,25 +49,22 @@
         [Authorize]
         public ActionResult Create(int id, CommentViewModel commentViewModel)
         {
-            //if (this.ModelState.IsValid)
-            //{
+            if (this.ModelState.IsValid)
+            {
                 var userId = this.User.Identity.GetUserId();
                 var user = this.usersService.GetById(userId);
                 var commentPost = this.postsService.GetById(id);
 
-                var newComment = new Comment
-                {
-                    Content = commentViewModel.Content,
-                    Post = commentPost,
-                    Author = user
-                };
+                var newComment = this.Mapper.Map<Comment>(commentViewModel);
+                newComment.Author = user;
+                newComment.Post = commentPost;
 
                 this.commentsService.Add(newComment);
 
-                return this.PartialView("_CommentDetail", commentViewModel);
-            //}
+                return this.RedirectToAction("Details", "Posts", new { id = id });
+            }
 
-            return this.View("_CreateComment", commentViewModel);
+            return this.RedirectToAction("Details", "Posts", new { id = id });
         }
     }
 }

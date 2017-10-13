@@ -2,7 +2,10 @@
 
 <div class="media">
     <div class="media-body">
-        <h4 class="media-heading">@Model.AuthorUsername <span class="pull-right">@Model.CommentedOn</span></h4>
+        <h4 class="media-heading">
+            <span class="post-author">Posted by: @Model.AuthorUsername</span>
+            <span class="post-commented-on">@Html.DisplayFor(model => model.CommentedOn)</span>
+        </h4>
         <p>@Model.Content</p>
     </div>
 </div>

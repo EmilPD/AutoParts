@@ -6,17 +6,8 @@
     using Data.Models;
     using Infrastructure.Mapping;
 
-    public class CommentViewModel : IMapFrom<Comment>, IHaveCustomMappings
+    public class CommentViewModel : IMapBothWays<Comment>, IHaveCustomMappings
     {
-        //public CommentViewModel()
-        //{
-        //}
-
-        //public CommentViewModel(int postId)
-        //{
-        //    this.PostId = postId;
-        //}
-
         public int Id { get; set; }
 
         [Required]
@@ -32,11 +23,9 @@
         public void CreateMappings(IMapperConfiguration configuration)
         {
             configuration.CreateMap<Comment, CommentViewModel>()
-                .ForMember(m => m.PostId, opt => opt.MapFrom(u => u.Author.Id));
-            configuration.CreateMap<Comment, CommentViewModel>()
-                .ForMember(m => m.CommentedOn, opt => opt.MapFrom(u => u.CreatedOn));
-            configuration.CreateMap<Comment, CommentViewModel>()
-                .ForMember(m => m.AuthorUsername, opt => opt.MapFrom(u => u.Author.UserName));
+                .ForMember(commentViewModel => commentViewModel.PostId, cfg => cfg.MapFrom(comment => comment.Post.Id))
+                .ForMember(commentViewModel => commentViewModel.AuthorUsername, cfg => cfg.MapFrom(comment => comment.Author.UserName))
+                .ForMember(commentViewModel => commentViewModel.CommentedOn, cfg => cfg.MapFrom(comment => comment.CreatedOn));
         }
     }
 }
