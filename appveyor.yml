@@ -1,0 +1,19 @@
+version: 1.0.{build}
+branches:
+  only:
+  - master
+before_build:
+- ps: nuget restore src/CommonNews.sln
+
+build:
+  project: src/CommonNews.sln
+  verbosity: minimal
+
+environment:
+    COVERALLS_REPO_TOKEN:  
+       secure: b4yYdMHpIZXcnzmJuyyeCrQHVijtwnxla
+
+after_test: 
+        - src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"src\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single src\Tests\CommonNews.Services.Web.Tests\bin\Debug\CommonNews.Services.Web.Tests.dll srt\Tests\CommonNews.Web.Controllers.Tests\bin\Debug\CommonNews.Web.Controllers.Tests.dll srt\Tests\CommonNews.Web.Routes.Tests\bin\Debug\CommonNews.Web.Routes.Tests.dll " -output:cover.xml
+
+        - srt\packages\coveralls.io.1.4.2\tools\coveralls.net.exe --opencover cover.xml
