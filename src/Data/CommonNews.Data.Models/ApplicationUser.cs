@@ -32,13 +32,13 @@
 
         public DateTime? ModifiedOn { get; set; }
 
-        public virtual ICollection<Post> Posts
+        public ICollection<Post> Posts
         {
             get { return this.posts; }
             set { this.posts = value; }
         }
 
-        public virtual ICollection<Comment> Comments
+        public ICollection<Comment> Comments
         {
             get { return this.comments; }
             set { this.comments = value; }

@@ -9,8 +9,8 @@
         [StringLength(1024)]
         public string Content { get; set; }
 
-        public virtual ApplicationUser Author { get; set; }
+        public ApplicationUser Author { get; set; }
 
-        public virtual Post Post { get; set; }
+        public Post Post { get; set; }
     }
 }
