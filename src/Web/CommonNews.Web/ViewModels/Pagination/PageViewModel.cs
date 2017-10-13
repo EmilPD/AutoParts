@@ -1,4 +1,4 @@
-﻿namespace CommonNews.Web.Areas.Admin.Models
+﻿namespace CommonNews.Web.ViewModels.Pagination
 {
     using System.Collections.Generic;
     using Common;

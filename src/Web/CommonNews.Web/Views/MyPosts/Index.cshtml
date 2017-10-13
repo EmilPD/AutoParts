@@ -1,0 +1,77 @@
+﻿@using CommonNews.Web.ViewModels.Post
+@using CommonNews.Web.Helpers
+@using CommonNews.Web.ViewModels.Pagination
+@model PageViewModel<PostViewModel>
+@{
+    ViewBag.Title = "My Posts";
+}
+
+<h2>My Posts</h2>
+
+<button class="btn btn-primary create-new-post">
+    @Html.ActionLink("Create New", "Create")
+</button>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading row">
+                <div class="col-md-2">Image</div>
+                <div class="col-md-2">Title</div>
+                <div class="col-md-6">Content</div>
+                <div class="col-md-2"></div>
+            </div>
+            @foreach (var post in Model.Items)
+            {
+                <div class="panel-body row">
+                    <div class="col-md-2 image_url">
+                        <a href="/posts/details/@post.Id">
+                            <img class="post-image" src="@post.ImageUrl" alt="post image" />
+                        </a>
+                    </div>
+                    <div class="col-md-2 my-posts-title">
+                        @Html.DisplayFor(modelItem => post.Title)
+                    </div>
+                    <div class="col-md-6 my-posts-content">
+                        @post.Content.Limit(500)
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-warning btn-sm" href="/posts/edit/@post.Id">Edit</a>
+                        @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger btn-sm" href="/posts/delete/@post.Id">Delete</a>
+                        }
+                    </div>
+                </div>
+            }
+            @if (Model.Pagination.EndPage > 1)
+            {
+                <ul class="pagination">
+                    @if (Model.Pagination.CurrentPage > 1)
+                    {
+                        <li>
+                            <a href="~/MyPosts/Index">First</a>
+                        </li>
+                        <li>
+                            <a href="~/MyPosts/Index?page=@(Model.Pagination.CurrentPage - 1)">Previous</a>
+                        </li>
+                    }
+                    @for (var page = Model.Pagination.StartPage; page <= Model.Pagination.EndPage; page++)
+                    {
+                        <li class="@(page == Model.Pagination.CurrentPage ? "active" : "")">
+                            <a href="~/MyPosts/Index?page=@page">@page</a>
+                        </li>}
+                    @if (Model.Pagination.CurrentPage < Model.Pagination.TotalPages)
+                    {
+                        <li>
+                            <a href="~/MyPosts/Index?page=@(Model.Pagination.CurrentPage + 1)">Next</a>
+                        </li>
+                        <li>
+                            <a href="~/MyPosts/Index?page=@(Model.Pagination.TotalPages)">Last</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

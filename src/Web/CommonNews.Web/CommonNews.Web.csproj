@@ -224,7 +224,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
-    <Compile Include="Areas\Admin\Models\PageViewModel.cs" />
+    <Compile Include="Controllers\MyPostsController.cs" />
+    <Compile Include="ViewModels\Pagination\PageViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UsersViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -361,7 +362,7 @@
     <Content Include="Views\Comments\_CommentDetail.cshtml" />
     <Content Include="Views\Comments\_Comments.cshtml" />
     <Content Include="Views\Comments\_CreateComment.cshtml" />
-    <Content Include="Views\Posts\MyPosts.cshtml" />
+    <Content Include="Views\MyPosts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Shared\" />
