@@ -21,12 +21,6 @@
 
         public IDbSet<PostCategory> PostCategories { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MsSqlDbContext, Configuration>());
-            base.OnModelCreating(modelBuilder);
-        }
-
         public override int SaveChanges()
         {
             this.ApplyAuditInfoRules();
@@ -50,6 +44,12 @@
                 // Throw a new DbEntityValidationException with the improved exception message.
                 throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
             }
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MsSqlDbContext, Configuration>());
+            base.OnModelCreating(modelBuilder);
         }
 
         private void ApplyAuditInfoRules()
