@@ -1,8 +1,10 @@
 ﻿namespace CommonNews.Web.ViewModels.Post
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;
+    using Comment;
     using Data.Models;
     using Infrastructure.Mapping;
 
@@ -20,11 +22,13 @@
 
         public PostCategory Category { get; set; }
 
+        public ICollection<CommentViewModel> Comments { get; set; }
+
         public string AuthorUsername { get; set; }
 
         public string ImageUrl { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime PostedOn { get; set; }
 
         public void CreateMappings(IMapperConfiguration configuration)
