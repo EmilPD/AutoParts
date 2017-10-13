@@ -1,12 +1,15 @@
 ﻿namespace CommonNews.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Data;
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
     using Bytes2you.Validation;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
+    using ViewModels.Comment;
     using ViewModels.Post;
 
     public class PostsController : BaseController
@@ -34,9 +37,16 @@
         {
             var posts = this.postsService
                 .GetAll()
+                .Include(x => x.Author)
+                .Include(x => x.Category)
                 .ToList()
                 .Select(x => this.Mapper.Map<PostViewModel>(x))
                 .ToList();
+
+            if (posts == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
 
             return this.View(posts);
         }
@@ -44,16 +54,30 @@
         // GET: Posts/Details/5
         public ActionResult Details(int id)
         {
-            Post post = this.postsService.GetById(id);
+            Post post = this.postsService
+                .GetAll()
+                .Where(x => x.Id == id)
+                .Include(x => x.Comments)
+                .FirstOrDefault();
 
             if (post == null)
             {
                 return this.HttpNotFound();
             }
 
+            var commentsInPost = this.Mapper
+                .Map<ICollection<CommentViewModel>>(post.Comments.Where(x => x.IsDeleted == false)
+                .ToList());
+
             var postViewModel = this.Mapper.Map<PostViewModel>(post);
 
-            return this.View(postViewModel);
+            var viewModel = new PostWithCommentsViewModel
+            {
+                Post = postViewModel,
+                Comments = commentsInPost
+            };
+
+            return this.View(viewModel);
         }
 
         // GET: Posts/Create
@@ -66,6 +90,11 @@
                 Post = new PostViewModel(),
                 Categories = categories
             };
+
+            if (viewModel == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
 
             return this.View(viewModel);
         }
@@ -102,7 +131,12 @@
         [Authorize]
         public ActionResult Edit(int id)
         {
-            Post post = this.postsService.GetById(id);
+            Post post = this.postsService
+                .GetAll()
+                .Where(x => x.Id == id)
+                .Include(x => x.Author)
+                .Include(x => x.Category)
+                .FirstOrDefault();
 
             if (post == null)
             {
@@ -116,6 +150,11 @@
                 Post = postViewModel,
                 Categories = categories
             };
+
+            if (viewModel == null)
+            {
+                return this.HttpNotFound("Page not found!");
+            }
 
             return this.View(viewModel);
         }
