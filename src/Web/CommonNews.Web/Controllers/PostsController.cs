@@ -8,7 +8,7 @@
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
     using ViewModels.Post;
-    using System;
+
     public class PostsController : BaseController
     {
         private readonly IDataService<Post> postsService;
@@ -83,7 +83,6 @@
             var categoryId = int.Parse(this.Request["Post.Category"]);
             var category = this.categoriesService.GetById(categoryId);
 
-            postFormViewModel.Post.Author = user;
             postFormViewModel.Post.Category = category;
 
             if (postFormViewModel.Post.ImageUrl == null)
@@ -91,18 +90,8 @@
                 postFormViewModel.Post.ImageUrl = "/Content/images/default.jpg";
             }
 
-            //var newPost = new Post
-            //{
-            //    Author = user,
-            //    Category = category,
-            //    Title = postFormViewModel.Post.Title,
-            //    Content = postFormViewModel.Post.Content,
-            //    IsDeleted = false,
-            //    ImageUrl = postFormViewModel.Post.ImageUrl,
-            //    CreatedOn = DateTime.UtcNow
-            //};
-
             var newPost = this.Mapper.Map<Post>(postFormViewModel.Post);
+            newPost.Author = user;
 
             this.postsService.Add(newPost);
 
@@ -139,17 +128,69 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PostFormViewModel postFormViewModel)
         {
-            if (postFormViewModel.Post.ImageUrl == null)
-            {
-                postFormViewModel.Post.ImageUrl = "/Content/images/default.jpg";
-            }
+            //var errors = this.ModelState.Values.SelectMany(v => v.Errors);
+            //if (!this.ModelState.IsValid)
+            //{
+            //    var categories = this.categoriesService.GetAll().ToList();
+            //    var postViewModel = postFormViewModel.Post;
+            //    var viewModel = new PostFormViewModel
+            //    {
+            //        Post = postViewModel,
+            //        Categories = categories
+            //    };
+
+            //    return this.View(viewModel);
+            //}
 
             var editPost = this.Mapper.Map<Post>(postFormViewModel.Post);
+
+            var postInDbId = postFormViewModel.Post.Id;
+            var postInDb = this.postsService.GetById(postInDbId);
+
+            var categoryId = int.Parse(this.Request["Post.Category.Id"]);
+            var category = this.categoriesService.GetById(categoryId);
+            editPost.Category = category;
+
+            if (editPost.ImageUrl == null)
+            {
+                editPost.ImageUrl = "/Content/images/default.jpg";
+            }
+
+            editPost.CreatedOn = postInDb.CreatedOn;
 
             this.postsService.Update(editPost);
 
             return this.RedirectToAction("Index");
         }
+
+        //// POST: Posts/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(PostViewModel postFormViewModel)
+        //{
+        //    var editPost = this.Mapper.Map<Post>(postFormViewModel);
+
+        //    var postInDbId = postFormViewModel.Id;
+        //    var postInDb = this.postsService.GetById(postInDbId);
+
+        //    var categoryId = int.Parse(this.Request["Post.Category.Id"]);
+        //    var category = this.categoriesService.GetById(categoryId);
+        //    editPost.Category = category;
+
+        //    if (editPost.ImageUrl == null)
+        //    {
+        //        editPost.ImageUrl = "/Content/images/default.jpg";
+        //    }
+
+        //    editPost.CreatedOn = postInDb.CreatedOn;
+
+        //    this.postsService.Update(editPost);
+
+        //    return this.RedirectToAction("Index");
+        //}
 
         // GET: Posts/Delete/5
         [Authorize(Roles = "Admin")]
