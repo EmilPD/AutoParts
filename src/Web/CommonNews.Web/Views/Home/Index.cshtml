@@ -1,17 +1,23 @@
 ﻿@using CommonNews.Web.ViewModels.Home
 @model HomeViewModel
-
 @{
     ViewBag.Title = "Home Page";
 }
-<h1>Welcome</h1>
-
-<hr />
-<div class="row">
-    @foreach (var post in Model.Posts)
-    {
-        @Html.Partial("_CompactPostPartial", post);
-    }
-</div>
+<h2>Latest news</h2>
+@*<div class="alert alert-info">
+<b>
+    Data Collected @@ @DateTime.Now.ToString()
+    </b>
+</div>*@
+        <div class="row">
+            <div class="col-ts-12">
+                <section id="compact-posts-container" class="row eq-height">
+                    @foreach (var post in Model.Posts)
+            {
+                        @Html.Partial("_CompactPostPartial", post);
+            }
+                </section>
+            </div>
+        </div>
 
 

@@ -8,11 +8,11 @@
     <ul class="nav navbar-nav navbar-right">
         @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("User"))
         {
-            <li>@Html.ActionLink("My Posts", "MyPosts", "Posts", new { area = string.Empty }, null)</li>
+            <li>@Html.ActionLink("My Posts", "Index", "MyPosts", new { area = string.Empty }, null)</li>
         }
         @if (ViewContext.HttpContext.User.IsInRole("Admin"))
         {
-            <li>@Html.ActionLink("Dashboard", "Index", "Users", new { area = "Admin" }, null)</li>
+            <li>@Html.ActionLink("Users", "Index", "Users", new { area = "Admin" }, null)</li>
         }
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Manage" })

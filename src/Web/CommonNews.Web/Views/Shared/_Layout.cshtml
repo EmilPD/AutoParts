@@ -10,12 +10,11 @@
     @Html.Partial("_NavBarPartial")
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.UtcNow.Year - CommonNews</p>
-        </footer>
+        
     </div>
-
+    <footer>
+        <p>&copy; @DateTime.UtcNow.Year - CommonNews</p>
+    </footer>
     @Scripts.Render("~/bundles/libs")
     @RenderSection("scripts", required: false)
 </body>
