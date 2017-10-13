@@ -6,11 +6,11 @@
     using System.Web.Mvc;
     using Bytes2you.Validation;
     using Common;
-    using CommonNews.Data.Models;
-    using CommonNews.Web.ViewModels.Account;
+    using Data.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
+    using ViewModels.Account;
 
     [Authorize]
     public class AccountController : BaseController

@@ -3,7 +3,6 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
-    using System.Web.UI;
     using Bytes2you.Validation;
     using Common;
     using Data.Models;
@@ -24,7 +23,6 @@
         }
 
         [HttpGet]
-        [OutputCache(Duration = 60, Location = OutputCacheLocation.Server, VaryByParam = "*")]
         public ActionResult Index()
         {
             var posts = this.postsService

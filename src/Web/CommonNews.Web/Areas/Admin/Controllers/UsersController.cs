@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.UI;
     using Bytes2you.Validation;
     using Common.Contracts;
     using Data.Models;
     using Models;
     using Services.Data.Common.Contracts;
+    using ViewModels.Pagination;
     using Web.Controllers;
 
     [Authorize(Roles = "Admin")]
@@ -28,6 +30,7 @@
 
         // GET: Admin/Users
         [HttpGet]
+        [OutputCache(Duration = 60, Location = OutputCacheLocation.Client, VaryByParam = "*")]
         public ActionResult Index(int? page, PageViewModel<UsersViewModel> pageViewModel)
         {
             var users = this.usersService.GetAll().OrderBy(x => x.UserName).AsEnumerable();

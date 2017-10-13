@@ -23,6 +23,7 @@
         }
 
         // GET: Categories
+        [OutputCache(Duration = 60, VaryByParam = "none")]
         public ActionResult Index(string categoryName)
         {
             var category = this.categoriesService

@@ -31,19 +31,6 @@
             this.usersService = usersService;
         }
 
-        //public ActionResult All(int id)
-        //{
-        //    var comments = this.commentsService
-        //        .GetAll()
-        //        .Where(c => c.Post.Id == id && !c.IsDeleted)
-        //        .OrderByDescending(c => c.CreatedOn)
-        //        .ToList()
-        //        .Select(x => this.Mapper.Map<CommentViewModel>(x))
-        //        .ToList();
-
-        //    return this.PartialView(comments);
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]

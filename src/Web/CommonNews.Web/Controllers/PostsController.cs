@@ -17,19 +17,23 @@
         private readonly IDataService<Post> postsService;
         private readonly IDataService<PostCategory> categoriesService;
         private readonly IDataService<ApplicationUser> usersService;
+        private readonly IDataService<Comment> commentsService;
 
         public PostsController(
             IDataService<Post> postsService,
             IDataService<PostCategory> categoriesService,
-            IDataService<ApplicationUser> usersService)
+            IDataService<ApplicationUser> usersService,
+            IDataService<Comment> commentsService)
         {
             Guard.WhenArgument(postsService, "PostsService").IsNull().Throw();
             Guard.WhenArgument(categoriesService, "CategoriesService").IsNull().Throw();
             Guard.WhenArgument(usersService, "UsersService").IsNull().Throw();
+            Guard.WhenArgument(commentsService, "CommentsService").IsNull().Throw();
 
             this.postsService = postsService;
             this.categoriesService = categoriesService;
             this.usersService = usersService;
+            this.commentsService = commentsService;
         }
 
         // GET: Posts
@@ -51,28 +55,8 @@
             return this.View(posts);
         }
 
-        [Authorize]
-        public ActionResult MyPosts()
-        {
-            var userId = this.User.Identity.GetUserId();
-            var posts = this.postsService
-                .GetAll()
-                .Where(x => x.Author.Id == userId)
-                .Include(x => x.Author)
-                .Include(x => x.Category)
-                .ToList()
-                .Select(x => this.Mapper.Map<PostViewModel>(x))
-                .ToList();
-
-            if (posts == null)
-            {
-                return this.HttpNotFound("Page not found!");
-            }
-
-            return this.View(posts);
-        }
-
         // GET: Posts/Details/5
+        [OutputCache(Duration = 30, VaryByParam = "none")]
         public ActionResult Details(int id)
         {
             Post post = this.postsService
@@ -88,9 +72,14 @@
                 return this.HttpNotFound();
             }
 
+            var comments = this.commentsService
+                .GetAll()
+                .Where(x => x.Post.Id == id)
+                .Include(x => x.Author)
+                .ToList();
+
             var commentsInPost = this.Mapper
-                .Map<ICollection<CommentViewModel>>(post.Comments.Where(x => x.IsDeleted == false)
-                .ToList());
+                .Map<ICollection<CommentViewModel>>(comments);
 
             var postViewModel = this.Mapper.Map<PostViewModel>(post);
 
@@ -105,6 +94,7 @@
 
         // GET: Posts/Create
         [Authorize]
+        [OutputCache(Duration = 86000, VaryByParam = "none")]
         public ActionResult Create()
         {
             var categories = this.categoriesService.GetAll().ToList();
@@ -152,6 +142,7 @@
 
         // GET: Posts/Edit/5
         [Authorize]
+        [OutputCache(Duration = 60, VaryByParam = "none")]
         public ActionResult Edit(int id)
         {
             Post post = this.postsService
