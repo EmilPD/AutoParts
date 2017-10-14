@@ -37,24 +37,24 @@
                 @if (Model.Pagination.CurrentPage > 1)
                 {
                     <li>
-                        <a href="~/Admin/Users/Index">First</a>
+                        <a href="~/admin/users/Index">First</a>
                     </li>
                     <li>
-                        <a href="~/Admin/Users/Index?page=@(Model.Pagination.CurrentPage - 1)">Previous</a>
+                        <a href="~/admin/users/Index?page=@(Model.Pagination.CurrentPage - 1)">Previous</a>
                     </li>
                 }
                 @for (var page = Model.Pagination.StartPage; page <= Model.Pagination.EndPage; page++)
                 {
                     <li class="@(page == Model.Pagination.CurrentPage ? "active" : "")">
-                        <a href="~/Admin/Users/Index?page=@page">@page</a>
+                        <a href="~/admin/users/Index?page=@page">@page</a>
                     </li>}
                 @if (Model.Pagination.CurrentPage < Model.Pagination.TotalPages)
                 {
                     <li>
-                        <a href="~/Admin/Users/Index?page=@(Model.Pagination.CurrentPage + 1)">Next</a>
+                        <a href="~/admin/users/Index?page=@(Model.Pagination.CurrentPage + 1)">Next</a>
                     </li>
                     <li>
-                        <a href="~/Admin/Users/Index?page=@(Model.Pagination.TotalPages)">Last</a>
+                        <a href="~/admin/users/Index?page=@(Model.Pagination.TotalPages)">Last</a>
                     </li>
                 }
             </ul>
