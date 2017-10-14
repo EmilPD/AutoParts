@@ -5,6 +5,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
+    using AutoMapper;
     using Bytes2you.Validation;
     using Data.Models;
     using Services.Data.Common.Contracts;
@@ -15,7 +16,8 @@
     {
         private readonly IDataService<PostCategory> categoriesService;
 
-        public CategoriesController(IDataService<PostCategory> categoriesService)
+        public CategoriesController(IDataService<PostCategory> categoriesService, IMapper mapper)
+            : base(mapper)
         {
             Guard.WhenArgument(categoriesService, "CategoriesService").IsNull().Throw();
 
@@ -26,15 +28,9 @@
         [OutputCache(Duration = 60, VaryByParam = "none")]
         public ActionResult Index(string categoryName)
         {
-            var category = this.categoriesService
-                .GetAll()
-                .Include(x => x.Posts)
-                .Where(x => x.Name.ToLower() == categoryName.ToLower())
-                .FirstOrDefault();
+            var category = this.categoriesService.GetAll().Include(x => x.Posts).Where(x => x.Name.ToLower() == categoryName.ToLower()).FirstOrDefault();
 
-            var postsInCategory = this.Mapper
-                .Map<ICollection<PostViewModel>>(category.Posts.Where(x => x.IsDeleted == false)
-                .ToList());
+            var postsInCategory = this.Mapper.Map<ICollection<PostViewModel>>(category.Posts.Where(x => x.IsDeleted == false).ToList());
 
             var viewModel = new CategoryViewModel
             {

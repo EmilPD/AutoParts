@@ -3,14 +3,14 @@
     using System.Web.Mvc;
     using Data.Models;
     using Identity;
-    using Identity.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Moq;
     using NUnit.Framework;
-    using ViewModels.Account;
+    using TestStack.FluentMVCTesting;
     using Web.Controllers;
+    using Web.ViewModels.Account;
 
     [TestFixture]
     public class AccountControllerTests
@@ -281,7 +281,7 @@
             var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
 
             // Act
-            AccountController accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
+            var accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
 
             // Assert
             Assert.AreEqual(mockedUserManager.Object, accController.UserManager);
@@ -291,10 +291,10 @@
         public void RegisterShould_ReturnViewResult_WhenRegisterIsCalled()
         {
             // Arrange
-            AccountController accController = new AccountController();
+            var accController = new AccountController();
 
             // Act
-            ViewResult result = accController.Register() as ViewResult;
+            var result = accController.Register() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -324,10 +324,10 @@
         public void Register_ShouldReturnViewResult_WhenRegisterIsCalled()
         {
             // Arrange
-            AccountController accController = new AccountController();
+            var accController = new AccountController();
 
             // Act
-            ViewResult result = accController.Register() as ViewResult;
+            var result = accController.Register() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -344,7 +344,7 @@
             var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
 
             var mockedViewModel = new Mock<RegisterViewModel>();
-            AccountController accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
+            var accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
             accController.ModelState.AddModelError("invalid", "invalid");
 
             // Act
@@ -354,6 +354,85 @@
 
             // Assert
             Assert.IsInstanceOf<RegisterViewModel>(viewResult.Model);
+        }
+
+        //[Test]
+        //public void Register_ShouldReturnRegisterViewModel1_WhenModelStateIsNotValid()
+        //{
+        //     Arrange
+        //    var mockedStore = new Mock<IUserStore<ApplicationUser>>();
+        //    var mockedUserManager = new Mock<ApplicationUserManager>(mockedStore.Object);
+
+        //    var mockedAuthenticationManager = new Mock<IAuthenticationManager>();
+        //    mockedAuthenticationManager.Setup(am => am.SignOut());
+        //    mockedAuthenticationManager.Setup(am => am.SignIn());
+
+        //    var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
+
+        //    var mockedViewModel = new Mock<RegisterViewModel>();
+        //    var accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
+        //    accController.AuthenticationManager = mockedAuthenticationManager.Object;
+
+        //    mockedViewModel.SetupProperty(x => x.ConfirmPassword, "abv");
+        //    mockedViewModel.SetupProperty(x => x.Email, "email@abv.bg");
+        //    mockedViewModel.SetupProperty(x => x.Password, "abv");
+        //    mockedViewModel.SetupProperty(x => x.Username, "dan4o");
+
+        //     Act
+        //    var actionResultTask = accController.Register(mockedViewModel.Object);
+        //     actionResultTask.Wait();
+
+        //    var viewResult = actionResultTask.Result as ViewResult;
+
+        //     Assert
+        //    Assert.That(accController.ModelState.IsValid);
+        //}
+
+        [Test]
+        public void LogOffShould_ShouldRedirectToMainPage()
+        {
+            // Arrange
+            var mockedStore = new Mock<IUserStore<ApplicationUser>>();
+            var mockedUserManager = new Mock<ApplicationUserManager>(mockedStore.Object);
+
+            var mockedAuthenticationManager = new Mock<IAuthenticationManager>();
+            mockedAuthenticationManager.Setup(am => am.SignOut());
+            mockedAuthenticationManager.Setup(am => am.SignIn());
+
+            var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
+
+            var mockedViewModel = new Mock<RegisterViewModel>();
+            var accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
+            accController.AuthenticationManager = mockedAuthenticationManager.Object;
+
+            // Act & Assert
+            accController.WithCallTo(c => c.LogOff())
+                .ShouldRedirectTo<HomeController>(typeof(HomeController).GetMethod("Index"));
+        }
+
+        [Test]
+        public void CallSignOutMethodOfAuthManager()
+        {
+            // Arrange
+            var mockedStore = new Mock<IUserStore<ApplicationUser>>();
+            var mockedUserManager = new Mock<ApplicationUserManager>(mockedStore.Object);
+
+            var mockedAuthenticationManager = new Mock<IAuthenticationManager>();
+            mockedAuthenticationManager.Setup(am => am.SignOut());
+            mockedAuthenticationManager.Setup(am => am.SignIn());
+
+            var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
+
+            var mockedViewModel = new Mock<RegisterViewModel>();
+            var accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
+            accController.AuthenticationManager = mockedAuthenticationManager.Object;
+
+            // Act
+            accController.LogOff();
+
+            // Assert
+            mockedAuthenticationManager
+                .Verify(m => m.SignOut(It.IsAny<string>()), Times.Once());
         }
     }
 }

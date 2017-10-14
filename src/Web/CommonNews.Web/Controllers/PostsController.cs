@@ -11,7 +11,7 @@
     using Services.Data.Common.Contracts;
     using ViewModels.Comment;
     using ViewModels.Post;
-
+    using AutoMapper;
     public class PostsController : BaseController
     {
         private readonly IDataService<Post> postsService;
@@ -23,7 +23,9 @@
             IDataService<Post> postsService,
             IDataService<PostCategory> categoriesService,
             IDataService<ApplicationUser> usersService,
-            IDataService<Comment> commentsService)
+            IDataService<Comment> commentsService,
+            IMapper mapper)
+            : base(mapper)
         {
             Guard.WhenArgument(postsService, "PostsService").IsNull().Throw();
             Guard.WhenArgument(categoriesService, "CategoriesService").IsNull().Throw();

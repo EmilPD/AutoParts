@@ -1,6 +1,7 @@
 ﻿namespace CommonNews.Web.Tests.Controllers.Tests
 {
     using System.Web.Mvc;
+    using AutoMapper;
     using Data.Models;
     using Moq;
     using NUnit.Framework;
@@ -15,9 +16,10 @@
         {
             // Arrange
             var postServiceMock = new Mock<IDataService<Post>>();
+            var mockedMapper = new Mock<IMapper>();
 
             // Act
-            var controller = new HomeController(postServiceMock.Object);
+            var controller = new HomeController(postServiceMock.Object, mockedMapper.Object);
 
             // Assert
             Assert.IsInstanceOf<HomeController>(controller);
@@ -28,7 +30,8 @@
         {
             // Arrange
             var postServiceMock = new Mock<IDataService<Post>>();
-            var controller = new HomeController(postServiceMock.Object);
+            var mockedMapper = new Mock<IMapper>();
+            var controller = new HomeController(postServiceMock.Object, mockedMapper.Object);
 
             // Act
             var result = controller.Index() as ViewResult;

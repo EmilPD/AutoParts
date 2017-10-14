@@ -1,15 +1,15 @@
-﻿namespace CommonNews.Web
-{
-    using System.Threading.Tasks;
+﻿//namespace CommonNews.Web
+//{
+//    using System.Threading.Tasks;
 
-    using Microsoft.AspNet.Identity;
+//    using Microsoft.AspNet.Identity;
 
-    public class EmailService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
-    }
-}
+//    public class EmailService : IIdentityMessageService
+//    {
+//        public Task SendAsync(IdentityMessage message)
+//        {
+//            // Plug in your email service here to send an email.
+//            return Task.FromResult(0);
+//        }
+//    }
+//}

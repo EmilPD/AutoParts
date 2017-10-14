@@ -10,7 +10,7 @@
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
     using ViewModels.Comment;
-
+    using AutoMapper;
     public class CommentsController : BaseController
     {
         private readonly IDataService<Post> postsService;
@@ -20,7 +20,9 @@
         public CommentsController(
             IDataService<Post> postsService,
             IDataService<Comment> commentsService,
-            IDataService<ApplicationUser> usersService)
+            IDataService<ApplicationUser> usersService,
+            IMapper mapper)
+            : base(mapper)
         {
             Guard.WhenArgument(postsService, "PostsService").IsNull().Throw();
             Guard.WhenArgument(commentsService, "CommentsService").IsNull().Throw();

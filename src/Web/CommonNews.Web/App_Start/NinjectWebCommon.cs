@@ -11,6 +11,7 @@ namespace CommonNews.Web.App_Start
     using Data.Common;
     using Data.Common.Contracts;
     using Data.Models;
+    using Identity;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security;
@@ -89,8 +90,11 @@ namespace CommonNews.Web.App_Start
             kernel.Bind(typeof(DbContext), typeof(MsSqlDbContext)).To<MsSqlDbContext>().InRequestScope();
             kernel.Bind(typeof(IEfRepository<>)).To(typeof(EfRepository<>)).InRequestScope();
             kernel.Bind<ISaveContext>().To<SaveContext>().InRequestScope();
-            kernel.Bind<IMapper>().To<Mapper>().InRequestScope();
+            kernel.Bind<IMapper>().To<Mapper>().InSingletonScope();
+            kernel.Bind<Mapper>().ToSelf();
             kernel.Bind<IPaginationFactory>().ToFactory().InSingletonScope();
+            kernel.Bind<ApplicationUserManager>().ToSelf();
+            kernel.Bind<ApplicationSignInManager>().ToSelf();
         }
     }
 }

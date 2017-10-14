@@ -9,12 +9,13 @@
     using Services.Data.Common.Contracts;
     using ViewModels.Home;
     using ViewModels.Post;
-
+    using AutoMapper;
     public class HomeController : BaseController
     {
         private readonly IDataService<Post> postsService;
 
-        public HomeController(IDataService<Post> postsService)
+        public HomeController(IDataService<Post> postsService, IMapper mapper)
+            : base(mapper)
         {
             Guard.WhenArgument(postsService, "PostsService").IsNull().Throw();
 

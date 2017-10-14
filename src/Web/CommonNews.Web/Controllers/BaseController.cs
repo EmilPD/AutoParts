@@ -6,11 +6,28 @@
 
     public abstract class BaseController : Controller
     {
-        protected IMapper Mapper
+        private IMapper mapper;
+
+        public BaseController(IMapper mapper)
+        {
+            this.Mapper = mapper;
+        }
+
+        public IMapper Mapper
         {
             get
             {
-                return AutoMapperConfig.Configuration.CreateMapper();
+                if (this.mapper == null)
+                {
+                    this.mapper = AutoMapperConfig.Configuration.CreateMapper();
+                }
+
+                return this.mapper;
+            }
+
+            set
+            {
+                this.mapper = value;
             }
         }
     }

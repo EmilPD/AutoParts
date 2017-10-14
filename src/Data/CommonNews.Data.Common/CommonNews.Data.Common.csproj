@@ -67,14 +67,6 @@
     <Compile Include="Contracts\ISaveContext.cs" />
     <Compile Include="EfRepository{T}.cs" />
     <Compile Include="Contracts\IEfRepository{T}.cs" />
-    <Compile Include="Migrations\201710131222334_Nowo.cs" />
-    <Compile Include="Migrations\201710131222334_Nowo.Designer.cs">
-      <DependentUpon>201710131222334_Nowo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710131510008_SeedSampleData.cs" />
-    <Compile Include="Migrations\201710131510008_SeedSampleData.Designer.cs">
-      <DependentUpon>201710131510008_SeedSampleData.cs</DependentUpon>
-    </Compile>
     <Compile Include="MsSqlDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveContext.cs" />
@@ -100,12 +92,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710131222334_Nowo.resx">
-      <DependentUpon>201710131222334_Nowo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710131510008_SeedSampleData.resx">
-      <DependentUpon>201710131510008_SeedSampleData.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

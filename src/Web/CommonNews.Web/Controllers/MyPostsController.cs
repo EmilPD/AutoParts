@@ -11,7 +11,7 @@
     using Services.Data.Common.Contracts;
     using ViewModels.Pagination;
     using ViewModels.Post;
-
+    using AutoMapper;
     [Authorize]
     public class MyPostsController : BaseController
     {
@@ -20,7 +20,9 @@
 
         public MyPostsController(
             IDataService<Post> postsService,
-            IPaginationFactory paginationFactory)
+            IPaginationFactory paginationFactory,
+            IMapper mapper)
+            : base(mapper)
         {
             Guard.WhenArgument(postsService, "UsersService").IsNull().Throw();
             Guard.WhenArgument(paginationFactory, "PaginationFactory").IsNull().Throw();

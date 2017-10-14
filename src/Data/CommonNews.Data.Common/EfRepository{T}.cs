@@ -15,16 +15,16 @@
         {
             Guard.WhenArgument(context, "MsSqlDbContext").IsNull().Throw();
 
-            if (context == null)
-            {
-                throw new ArgumentException("An instance of DbContext is required to use this repository.", nameof(context));
-            }
-
             this.Context = context;
             this.DbSet = this.Context.Set<T>();
+
+            if (this.DbSet == null)
+            {
+                throw new ArgumentException("DbContext does not contain DbSet<{0}>", typeof(T).Name);
+            }
         }
 
-        private IDbSet<T> DbSet { get; }
+        protected IDbSet<T> DbSet { get; }
 
         private MsSqlDbContext Context { get; }
 

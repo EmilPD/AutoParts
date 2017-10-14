@@ -1,4 +1,4 @@
-﻿// Uncomment this class to provide custom runtime policy for Glimpse
+﻿/*// Uncomment this class to provide custom runtime policy for Glimpse
 
 namespace CommonNews.Web
 {
@@ -27,4 +27,4 @@ namespace CommonNews.Web
             return RuntimePolicy.Off;
         }
     }
-}
+}*/

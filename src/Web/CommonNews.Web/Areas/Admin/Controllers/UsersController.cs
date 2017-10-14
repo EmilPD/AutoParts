@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.UI;
+    using AutoMapper;
     using Bytes2you.Validation;
     using Common.Contracts;
     using Data.Models;
@@ -19,7 +20,9 @@
         private readonly IDataService<ApplicationUser> usersService;
         private readonly IPaginationFactory paginationFactory;
 
-        public UsersController(IDataService<ApplicationUser> usersService, IPaginationFactory paginationFactory)
+        public UsersController(
+            IDataService<ApplicationUser> usersService, IPaginationFactory paginationFactory, IMapper mapper)
+            : base(mapper)
         {
             Guard.WhenArgument(usersService, "UsersService").IsNull().Throw();
             Guard.WhenArgument(paginationFactory, "PaginationFactory").IsNull().Throw();
@@ -42,35 +45,6 @@
             pageViewModel.Pagination = pagination;
 
             return this.View("Index", pageViewModel);
-        }
-
-        [HttpGet]
-        public ActionResult Edit(Guid id, UsersViewModel userModel)
-        {
-            var user = this.usersService.GetById(id.ToString());
-            if (user == null)
-            {
-                return this.HttpNotFound();
-            }
-
-            userModel = this.Mapper.Map<UsersViewModel>(user);
-
-            return this.View("Edit", userModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(UsersViewModel userModel)
-        {
-            if (this.ModelState.IsValid)
-            {
-                var user = this.Mapper.Map<ApplicationUser>(userModel);
-
-                this.usersService.Update(user);
-                return this.RedirectToAction("Index", "Users");
-            }
-
-            return this.View(userModel);
         }
 
         [HttpGet]

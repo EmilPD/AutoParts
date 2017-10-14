@@ -1,21 +1,17 @@
 ﻿namespace CommonNews.Web.Controllers
 {
-    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
     using Bytes2you.Validation;
     using Identity;
-    using Identity.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin.Security;
-    using ViewModels.Manage;
 
     [Authorize]
-    public class ManageController : BaseController
+    public class ManageController : Controller
     {
         // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
+        // private const string XsrfKey = "XsrfId";
 
         private ApplicationSignInManager signInManager;
 
@@ -34,22 +30,22 @@
             this.SignInManager = signInManager as ApplicationSignInManager;
         }
 
-        public enum ManageMessageId
-        {
-            AddPhoneSuccess,
+        //public enum ManageMessageId
+        //{
+        //    AddPhoneSuccess,
 
-            ChangePasswordSuccess,
+        //    ChangePasswordSuccess,
 
-            SetTwoFactorSuccess,
+        //    SetTwoFactorSuccess,
 
-            SetPasswordSuccess,
+        //    SetPasswordSuccess,
 
-            RemoveLoginSuccess,
+        //    RemoveLoginSuccess,
 
-            RemovePhoneSuccess,
+        //    RemovePhoneSuccess,
 
-            Error
-        }
+        //    Error
+        //}
 
         public ApplicationSignInManager SignInManager
         {
@@ -77,38 +73,38 @@
             }
         }
 
-        private IAuthenticationManager AuthenticationManager => this.HttpContext.GetOwinContext().Authentication;
+        //private IAuthenticationManager AuthenticationManager => this.HttpContext.GetOwinContext().Authentication;
 
-        // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
-        {
-            this.ViewBag.StatusMessage = message == ManageMessageId.ChangePasswordSuccess
-                                             ? "Your password has been changed."
-                                             : message == ManageMessageId.SetPasswordSuccess
-                                                   ? "Your password has been set."
-                                                   : message == ManageMessageId.SetTwoFactorSuccess
-                                                         ? "Your two-factor authentication provider has been set."
-                                                         : message == ManageMessageId.Error
-                                                               ? "An error has occurred."
-                                                               : message == ManageMessageId.AddPhoneSuccess
-                                                                     ? "Your phone number was added."
-                                                                     : message == ManageMessageId.RemovePhoneSuccess
-                                                                           ? "Your phone number was removed."
-                                                                           : string.Empty;
+        //// GET: /Manage/Index
+        //public async Task<ActionResult> Index(ManageMessageId? message)
+        //{
+        //    this.ViewBag.StatusMessage = message == ManageMessageId.ChangePasswordSuccess
+        //                                     ? "Your password has been changed."
+        //                                     : message == ManageMessageId.SetPasswordSuccess
+        //                                           ? "Your password has been set."
+        //                                           : message == ManageMessageId.SetTwoFactorSuccess
+        //                                                 ? "Your two-factor authentication provider has been set."
+        //                                                 : message == ManageMessageId.Error
+        //                                                       ? "An error has occurred."
+        //                                                       : message == ManageMessageId.AddPhoneSuccess
+        //                                                             ? "Your phone number was added."
+        //                                                             : message == ManageMessageId.RemovePhoneSuccess
+        //                                                                   ? "Your phone number was removed."
+        //                                                                   : string.Empty;
 
-            var userId = this.User.Identity.GetUserId();
-            var model = new IndexViewModel
-                            {
-                                HasPassword = this.HasPassword(),
-                                PhoneNumber = await this.UserManager.GetPhoneNumberAsync(userId),
-                                TwoFactor = await this.UserManager.GetTwoFactorEnabledAsync(userId),
-                                Logins = await this.UserManager.GetLoginsAsync(userId),
-                                BrowserRemembered =
-                                    await
-                                    this.AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-                            };
-            return this.View(model);
-        }
+        //    var userId = this.User.Identity.GetUserId();
+        //    var model = new IndexViewModel
+        //                    {
+        //                        HasPassword = this.HasPassword(),
+        //                        PhoneNumber = await this.UserManager.GetPhoneNumberAsync(userId),
+        //                        TwoFactor = await this.UserManager.GetTwoFactorEnabledAsync(userId),
+        //                        Logins = await this.UserManager.GetLoginsAsync(userId),
+        //                        BrowserRemembered =
+        //                            await
+        //                            this.AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+        //                    };
+        //    return this.View(model);
+        //}
 
         //// POST: /Manage/RemoveLogin
         //[HttpPost]
@@ -139,37 +135,37 @@
         //    return this.RedirectToAction("ManageLogins", new { Message = message });
         //}
 
-        // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
-        {
-            return this.View();
-        }
+        //// GET: /Manage/AddPhoneNumber
+        //public ActionResult AddPhoneNumber()
+        //{
+        //    return this.View();
+        //}
 
-        // POST: /Manage/AddPhoneNumber
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(model);
-            }
+        //// POST: /Manage/AddPhoneNumber
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+        //{
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return this.View(model);
+        //    }
 
-            // Generate the token and send it
-            var code =
-                await this.UserManager.GenerateChangePhoneNumberTokenAsync(this.User.Identity.GetUserId(), model.Number);
-            if (this.UserManager.SmsService != null)
-            {
-                var message = new IdentityMessage
-                                  {
-                                      Destination = model.Number,
-                                      Body = "Your security code is: " + code
-                                  };
-                await this.UserManager.SmsService.SendAsync(message);
-            }
+        //    // Generate the token and send it
+        //    var code =
+        //        await this.UserManager.GenerateChangePhoneNumberTokenAsync(this.User.Identity.GetUserId(), model.Number);
+        //    if (this.UserManager.SmsService != null)
+        //    {
+        //        var message = new IdentityMessage
+        //                          {
+        //                              Destination = model.Number,
+        //                              Body = "Your security code is: " + code
+        //                          };
+        //        await this.UserManager.SmsService.SendAsync(message);
+        //    }
 
-            return this.RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
-        }
+        //    return this.RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+        //}
 
         //// POST: /Manage/EnableTwoFactorAuthentication
         //[HttpPost]

@@ -15,11 +15,11 @@
     using ViewModels.Account;
 
     [Authorize]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private ApplicationSignInManager signInManager;
-
         private ApplicationUserManager userManager;
+        private IAuthenticationManager authnManager;
 
         public AccountController()
         {
@@ -60,7 +60,25 @@
             }
         }
 
-        private IAuthenticationManager AuthenticationManager => this.HttpContext.GetOwinContext().Authentication;
+        //private IAuthenticationManager AuthenticationManager => this.HttpContext.GetOwinContext().Authentication;
+
+        public IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                if (this.authnManager == null)
+                {
+                    this.authnManager = this.HttpContext.GetOwinContext().Authentication;
+                }
+
+                return this.authnManager;
+            }
+
+            set
+            {
+                this.authnManager = value;
+            }
+        }
 
         // GET: /Account/Login
         [AllowAnonymous]

@@ -1,7 +1,7 @@
-﻿namespace SociumApp.Tests.WebClient.Tests.ViewModels.Tests
+﻿namespace CommonNews.Web.Tests.ViewModels.Tests
 {
-    using CommonNews.Web.ViewModels.Account;
     using NUnit.Framework;
+    using Web.ViewModels.Account;
 
     [TestFixture]
     public class AccountViewModelsTests
