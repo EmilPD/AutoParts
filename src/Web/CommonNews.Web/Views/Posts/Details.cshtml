@@ -1,8 +1,9 @@
 ﻿@using CommonNews.Web.ViewModels.Post
-@model PostViewModel
+@model PostWithCommentsViewModel
 
 @{
     ViewBag.Title = "Details";
+    const string CommentsPartialViewsFolder = "~/Views/Comments/{0}.cshtml";
 }
 
 <h2>Details</h2>
@@ -12,35 +13,58 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Post.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Post.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Content)
+            @Html.DisplayNameFor(model => model.Post.Content)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Content)
+            @Html.DisplayFor(model => model.Post.Content)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
+            @Html.DisplayNameFor(model => model.Post.Category.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImageUrl)
+            @Html.DisplayFor(model => model.Post.Category.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Post.ImageUrl)
         </dd>
     </dl>
 </div>
+
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("User"))
+    {
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Post.Id }) @:|
+    }
     @if (ViewContext.HttpContext.User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }); @:|
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Post.Id }); @:|
     }
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<!--Start Comments-->
+<h3>Comments</h3>
+@foreach (var comment in Model.Comments)
+{
+    @Html.Partial(string.Format(CommentsPartialViewsFolder, "_CommentDetail"), comment)
+}
+
+@Html.Partial(string.Format(CommentsPartialViewsFolder, "_Comments"), Model.Post.Id)
