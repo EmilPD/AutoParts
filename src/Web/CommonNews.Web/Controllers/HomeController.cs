@@ -6,7 +6,6 @@
     using Bytes2you.Validation;
     using Common;
     using Data.Models;
-    using Services.Data;
     using Services.Data.Common.Contracts;
     using ViewModels.Home;
     using ViewModels.Post;
@@ -15,7 +14,7 @@
     {
         private readonly IDataService<Post> postsService;
 
-        public HomeController(DataService<Post> postsService)
+        public HomeController(IDataService<Post> postsService)
         {
             Guard.WhenArgument(postsService, "PostsService").IsNull().Throw();
 

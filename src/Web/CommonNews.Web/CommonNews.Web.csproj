@@ -212,12 +212,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\ApplicationSignInManager.cs" />
-    <Compile Include="App_Start\ApplicationUserManager.cs" />
+    <Compile Include="Identity\ApplicationSignInManager.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\EmailService.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="Identity\Contracts\IApplicationSignInManager.cs" />
+    <Compile Include="Identity\Contracts\IApplicationUserManager.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SmsService.cs" />
@@ -402,10 +404,6 @@
     <ProjectReference Include="..\..\Services\CommonNews.Services.Data\CommonNews.Services.Data.csproj">
       <Project>{90fe4c4d-122a-406d-8a40-79c561fb8184}</Project>
       <Name>CommonNews.Services.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\CommonNews.Services.Web\CommonNews.Services.Web.csproj">
-      <Project>{deab17a2-58c1-448c-8a66-d49c3af7fc6c}</Project>
-      <Name>CommonNews.Services.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonNews.Web.Infrastructure\CommonNews.Web.Infrastructure.csproj">
       <Project>{6813dc53-5eee-4507-8604-5301ee51a0d3}</Project>

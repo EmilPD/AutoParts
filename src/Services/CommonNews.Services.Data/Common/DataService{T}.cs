@@ -19,9 +19,9 @@
             this.Context = context;
         }
 
-        protected IEfRepository<T> Data { get; set; }
+        public IEfRepository<T> Data { get; set; }
 
-        protected ISaveContext Context { get; set; }
+        public ISaveContext Context { get; set; }
 
         public virtual void Add(T item)
         {

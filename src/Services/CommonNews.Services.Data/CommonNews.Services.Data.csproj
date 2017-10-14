@@ -65,10 +65,6 @@
       <Project>{701f322f-aa01-4ddc-90b6-6935981c1e73}</Project>
       <Name>CommonNews.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CommonNews.Services.Web\CommonNews.Services.Web.csproj">
-      <Project>{deab17a2-58c1-448c-8a66-d49c3af7fc6c}</Project>
-      <Name>CommonNews.Services.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

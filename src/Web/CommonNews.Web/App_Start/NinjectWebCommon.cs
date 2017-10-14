@@ -72,9 +72,6 @@ namespace CommonNews.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ApplicationUserManager>().ToSelf().InRequestScope();
-            kernel.Bind<ApplicationSignInManager>().ToSelf().InRequestScope();
-
             kernel.Bind<IAuthenticationManager>().ToMethod(
                 c => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
 
@@ -89,7 +86,6 @@ namespace CommonNews.Web.App_Start
             });
 
             kernel.Bind(typeof(IDataService<>)).To(typeof(DataService<>)).InRequestScope();
-
             kernel.Bind(typeof(DbContext), typeof(MsSqlDbContext)).To<MsSqlDbContext>().InRequestScope();
             kernel.Bind(typeof(IEfRepository<>)).To(typeof(EfRepository<>)).InRequestScope();
             kernel.Bind<ISaveContext>().To<SaveContext>().InRequestScope();

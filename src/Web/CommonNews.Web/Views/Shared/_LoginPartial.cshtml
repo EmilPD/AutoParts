@@ -15,7 +15,7 @@
             <li>@Html.ActionLink("Users", "Index", "Users", new { area = "Admin" }, null)</li>
         }
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { area = string.Empty }, htmlAttributes: new { title = "Manage" })
+            <a href="#">Hello @User.Identity.GetUserName()!</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

@@ -2,13 +2,10 @@
 {
     using System.Web.Mvc;
     using AutoMapper;
-    using CommonNews.Services.Web;
     using Infrastructure.Mapping;
 
     public abstract class BaseController : Controller
     {
-        public ICacheService Cache { get; set; }
-
         protected IMapper Mapper
         {
             get

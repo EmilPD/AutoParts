@@ -1,15 +1,12 @@
 ﻿namespace CommonNews.Web
 {
     using System;
-
+    using Data.Models;
+    using Identity;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Cookies;
-
-    using CommonNews.Data;
-    using CommonNews.Data.Models;
-
     using Owin;
 
     public partial class Startup
