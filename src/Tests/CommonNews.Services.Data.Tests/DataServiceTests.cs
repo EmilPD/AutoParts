@@ -1,11 +1,12 @@
 ﻿namespace CommonNews.Services.Data.Tests
 {
+    using System;
     using Common.Contracts;
     using CommonNews.Data.Common.Contracts;
     using CommonNews.Data.Models;
     using Moq;
     using NUnit.Framework;
-    using System;
+
     [TestFixture]
     public class DataServiceTests
     {

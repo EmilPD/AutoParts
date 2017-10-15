@@ -1,6 +1,5 @@
 ﻿namespace CommonNews.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -8,7 +7,6 @@
     using Common;
     using Data.Models;
     using Identity;
-    using Identity.Contracts;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
@@ -59,9 +57,7 @@
                 this.userManager = value;
             }
         }
-
-        //private IAuthenticationManager AuthenticationManager => this.HttpContext.GetOwinContext().Authentication;
-
+        
         public IAuthenticationManager AuthenticationManager
         {
             get

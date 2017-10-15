@@ -356,38 +356,6 @@
             Assert.IsInstanceOf<RegisterViewModel>(viewResult.Model);
         }
 
-        //[Test]
-        //public void Register_ShouldReturnRegisterViewModel1_WhenModelStateIsNotValid()
-        //{
-        //     Arrange
-        //    var mockedStore = new Mock<IUserStore<ApplicationUser>>();
-        //    var mockedUserManager = new Mock<ApplicationUserManager>(mockedStore.Object);
-
-        //    var mockedAuthenticationManager = new Mock<IAuthenticationManager>();
-        //    mockedAuthenticationManager.Setup(am => am.SignOut());
-        //    mockedAuthenticationManager.Setup(am => am.SignIn());
-
-        //    var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
-
-        //    var mockedViewModel = new Mock<RegisterViewModel>();
-        //    var accController = new AccountController(mockedUserManager.Object, mockedSignInManager.Object);
-        //    accController.AuthenticationManager = mockedAuthenticationManager.Object;
-
-        //    mockedViewModel.SetupProperty(x => x.ConfirmPassword, "abv");
-        //    mockedViewModel.SetupProperty(x => x.Email, "email@abv.bg");
-        //    mockedViewModel.SetupProperty(x => x.Password, "abv");
-        //    mockedViewModel.SetupProperty(x => x.Username, "dan4o");
-
-        //     Act
-        //    var actionResultTask = accController.Register(mockedViewModel.Object);
-        //     actionResultTask.Wait();
-
-        //    var viewResult = actionResultTask.Result as ViewResult;
-
-        //     Assert
-        //    Assert.That(accController.ModelState.IsValid);
-        //}
-
         [Test]
         public void LogOffShould_ShouldRedirectToMainPage()
         {

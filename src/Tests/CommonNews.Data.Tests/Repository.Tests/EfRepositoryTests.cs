@@ -1,16 +1,14 @@
 ﻿namespace CommonNews.Data.Tests.Repository.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Common;
-    using Common.Contracts;
     using Data.Models;
     using Mock;
     using Moq;
     using NUnit.Framework;
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Linq;
-
+    
     [TestFixture]
     public class EfRepositoryTests
     {
@@ -164,59 +162,7 @@
             // Assert
             StringAssert.Contains(expectedExceptionMessage, exc.Message);
         }
-
-        //[Test]
-        //public void Add_ShouldCallSetAddedMethodOfDbContext()
-        //{
-        //    //Arrange
-        //    var posts = new List<Post>
-        //    {
-        //        new Post() {Id = 1, Title = "post", Content = "content"},
-        //        new Post() {Id = 2, Title = "post", Content = "content"}
-        //    };
-
-        //    var mockedDbContext = new Mock<MsSqlDbContext>();
-        //    var mockedPageSet = QueryableDbSetMock.GetQueryableMockDbSet<Post>(posts);
-
-        //    mockedDbContext.Setup(c => c.Set<Post>()).Returns(mockedPageSet);
-        //    mockedDbContext.Setup(c => c.Posts).Returns(mockedPageSet);
-        //    mockedDbContext.Setup(c => c.(It.IsAny<object>())).Returns(true);
-
-        //    var repositoryUnderTest = new EfRepository<Page>(mockedDbContext.Object);
-
-        //    //Act & Assert
-        //    repositoryUnderTest.Add(pages[0]);
-
-        //    //Assert
-        //    mockedDbContext.Verify(mc => mc.SetAdded(It.IsAny<object>()), Times.Once());
-        //}
-
-        //[Test]
-        //public void Add_ShouldCallAddMethodOfDbset_WhenSetAddedReturnsFalse()
-        //{
-        //    //Arrange
-        //    var posts = new List<Post>
-        //    {
-        //        new Post() {Id = 1, Title = "post", Content = "content"},
-        //        new Post() {Id = 2, Title = "post", Content = "content"}
-        //    };
-
-        //    var mockedDbContext = new Mock<MsSqlDbContext>();
-        //    var mockedPostSet = QueryableDbSetMock.GetQueryableMockDbSet<Post>(posts);
-
-        //    mockedDbContext.Setup(c => c.Set<Post>()).Returns(mockedPostSet);
-        //    mockedDbContext.Setup(c => c.Posts).Returns(mockedPostSet);
-        //    mockedDbContext.Setup(c => c.Posts.Add(It.IsAny<Post>())).Returns(new Post());
-
-        //    var repositoryUnderTest = new EfRepository<Post>(mockedDbContext.Object);
-
-        //    // Act
-        //    repositoryUnderTest.Add(posts[0]);
-
-        //    // Assert
-        //    mockedDbContext.Verify(m => m.Entry(It.IsAny<Post>()), Times.Once());
-        //}
-
+        
         [Test]
         public void Update_ShouldThrowArgumentNullException_WhenPassedEntityIsNull()
         {
@@ -242,32 +188,7 @@
             //Assert
             StringAssert.Contains(expectedExceptionMessage, exc.Message);
         }
-
-        //[Test]
-        //public void Update_ShouldCall_AddOrUpdate()
-        //{
-        //    //Arrange
-        //    var posts = new List<Post>
-        //    {
-        //        new Post() {Id = 1, Title = "post", Content = "content"},
-        //        new Post() {Id = 2, Title = "post", Content = "content"}
-        //    };
-
-        //    var mockedDbContext = new Mock<MsSqlDbContext>();
-        //    var mockedPostSet = QueryableDbSetMock.GetQueryableMockDbSet<Post>(posts);
-
-        //    mockedDbContext.Setup(c => c.Set<Post>()).Returns(mockedPostSet);
-        //    mockedDbContext.Setup(c => c.Posts).Returns(mockedPostSet);
-
-        //    var repositoryUnderTest = new EfRepository<Post>(mockedDbContext.Object);
-
-        //    //Act & Assert
-        //    repositoryUnderTest.Update(posts[0]);
-
-        //    //Assert
-        //    mockedDbContext.Verify(m => m.Posts.AddOrUpdate(It.IsAny<Post>()), Times.Once());
-        //}
-
+        
         [Test]
         public void Delete_ShouldThrowArgumentNullException_WhenPassedEntityIsNull()
         {
@@ -343,24 +264,5 @@
             //Assert
             Assert.IsAssignableFrom(typeof(DateTime), posts[0].DeletedOn);
         }
-
-        //[Test]
-        //public void Add_ShouldCallStateFactory_Once()
-        //{
-        //    // Arrange
-        //    var mockedComment = new Mock<Comment>();
-        //    mockedComment.SetupAllProperties();
-        //    var mockedDbContext = new Mock<MsSqlDbContext>();
-        //    var mockedEntryState = new Mock<IEntryState<Comment>>();
-        //    mockedEntryState.Object.State = EntityState.Added;
-        //    mockedDbContext.Setup(x => x.GetState(mockedComment.Object)).Returns(mockedEntryState.Object);
-        //    var repo = new EfRepository<Comment>(mockedDbContext.Object);
-
-        //    // Act
-        //    repo.Add(new Comment());
-
-        //    // Assert
-        //    mockedDbContext.Verify(x => x.GetState(mockedComment.Object), Times.Once);
-        //}
     }
 }

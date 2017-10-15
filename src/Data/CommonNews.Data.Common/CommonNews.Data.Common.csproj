@@ -64,12 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="Contracts\IStateFactory.cs" />
-    <Compile Include="Contracts\IEntryState.cs" />
     <Compile Include="Contracts\ISaveContext.cs" />
     <Compile Include="EfRepository{T}.cs" />
     <Compile Include="Contracts\IEfRepository{T}.cs" />
-    <Compile Include="IMsSqlDbContext.cs" />
     <Compile Include="Migrations\201710131222334_Nowo.cs" />
     <Compile Include="Migrations\201710131222334_Nowo.Designer.cs">
       <DependentUpon>201710131222334_Nowo.cs</DependentUpon>

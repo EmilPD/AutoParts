@@ -256,6 +256,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\error-pages.css" />
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\default.jpg" />
     <Content Include="Content\images\entertainment-1.jpg" />
@@ -271,6 +272,9 @@
     <Content Include="Content\images\footer-bg.png" />
     <Content Include="Content\images\select-arrow.png" />
     <Content Include="Content\main.css" />
+    <Content Include="errors\403.html" />
+    <Content Include="errors\404.html" />
+    <Content Include="errors\500.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

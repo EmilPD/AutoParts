@@ -7,7 +7,7 @@
     {
         public static void Config()
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MsSqlDbContext, Configuration>());
+            // Database.SetInitializer(new MigrateDatabaseToLatestVersion<MsSqlDbContext, Configuration>());
         }
     }
 }

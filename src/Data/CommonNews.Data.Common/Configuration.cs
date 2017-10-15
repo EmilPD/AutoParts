@@ -6,8 +6,8 @@
     {
         public Configuration()
         {
-            //this.AutomaticMigrationsEnabled = false;
-            //this.AutomaticMigrationDataLossAllowed = false;
+            this.AutomaticMigrationsEnabled = false;
+            this.AutomaticMigrationDataLossAllowed = false;
         }
     }
 }

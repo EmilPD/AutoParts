@@ -72,15 +72,6 @@
             Guard.WhenArgument(entity, "AddOrUpdate entity").IsNull().Throw();
 
             this.DbSet.AddOrUpdate(entity);
-
-            // var entry = this.Context.Entry(entity);
-
-            // if (entry.State == EntityState.Detached)
-            // {
-            //    this.DbSet.AddOrUpdate(entity);
-            // }
-
-            // entry.State = EntityState.Modified;
         }
 
         public void Delete(T entity)
