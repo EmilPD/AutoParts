@@ -1,4 +1,4 @@
-﻿namespace CommonNews.Web
+﻿namespace CommonNews.Web.App_Start
 {
     using System;
     using Data.Models;

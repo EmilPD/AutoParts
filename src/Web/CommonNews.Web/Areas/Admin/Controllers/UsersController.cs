@@ -53,7 +53,7 @@
             user = this.usersService.GetById(id.ToString());
             if (user == null)
             {
-                return this.HttpNotFound();
+                return this.HttpNotFound("Page not found!");
             }
 
             var userViewModel = this.Mapper.Map<UsersViewModel>(user);

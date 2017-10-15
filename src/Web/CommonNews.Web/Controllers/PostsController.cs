@@ -5,13 +5,14 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
+    using AutoMapper;
     using Bytes2you.Validation;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
     using ViewModels.Comment;
     using ViewModels.Post;
-    using AutoMapper;
+
     public class PostsController : BaseController
     {
         private readonly IDataService<Post> postsService;
@@ -49,11 +50,6 @@
                 .Select(x => this.Mapper.Map<PostViewModel>(x))
                 .ToList();
 
-            if (posts == null)
-            {
-                return this.HttpNotFound("Page not found!");
-            }
-
             return this.View(posts);
         }
 
@@ -71,7 +67,7 @@
 
             if (post == null)
             {
-                return this.HttpNotFound();
+                return this.HttpNotFound("Page not found!");
             }
 
             var comments = this.commentsService
@@ -156,7 +152,7 @@
 
             if (post == null)
             {
-                return this.HttpNotFound();
+                return this.HttpNotFound("Page not found!");
             }
 
             var categories = this.categoriesService.GetAll().ToList();
@@ -209,7 +205,7 @@
 
             if (post == null)
             {
-                return this.HttpNotFound();
+                return this.HttpNotFound("Page not found!");
             }
 
             var postViewModel = this.Mapper.Map<PostViewModel>(post);

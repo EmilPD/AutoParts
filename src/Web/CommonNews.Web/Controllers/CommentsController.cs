@@ -1,16 +1,13 @@
 ﻿namespace CommonNews.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
     using System.Web.Mvc;
+    using AutoMapper;
     using Bytes2you.Validation;
     using Data.Models;
     using Microsoft.AspNet.Identity;
     using Services.Data.Common.Contracts;
     using ViewModels.Comment;
-    using AutoMapper;
+
     public class CommentsController : BaseController
     {
         private readonly IDataService<Post> postsService;

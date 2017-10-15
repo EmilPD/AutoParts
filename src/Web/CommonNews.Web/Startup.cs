@@ -2,9 +2,9 @@
 
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(CommonNews.Web.Startup))]
+[assembly: OwinStartupAttribute(typeof(CommonNews.Web.App_Start.Startup))]
 
-namespace CommonNews.Web
+namespace CommonNews.Web.App_Start
 {
     public partial class Startup
     {

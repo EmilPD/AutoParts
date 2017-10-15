@@ -1,6 +1,4 @@
-﻿/*// Uncomment this class to provide custom runtime policy for Glimpse
-
-namespace CommonNews.Web
+﻿namespace CommonNews.Web.App_Start
 {
     using Glimpse.AspNet.Extensions;
     using Glimpse.Core.Extensibility;
@@ -27,4 +25,4 @@ namespace CommonNews.Web
             return RuntimePolicy.Off;
         }
     }
-}*/
+}

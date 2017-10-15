@@ -1,13 +1,13 @@
-﻿namespace CommonNews.Web
+﻿namespace CommonNews.Web.App_Start
 {
     using System.Data.Entity;
-    using Data;
+    using Data.Common;
 
     public static class DatabaseConfig
     {
         public static void Config()
         {
-            // Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MsSqlDbContext, Configuration>());
         }
     }
 }

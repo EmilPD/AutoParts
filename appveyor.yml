@@ -14,6 +14,6 @@ environment:
        secure: G8ZTbVl9Q+Gu1kwWlRuq2GqW050udwGfaF+pEgAxDSgYkrpjEeXr1sYUGVRASE9t
 
 after_test: 
-        - src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"src\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single src\Tests\CommonNews.Services.Data.Tests\bin\Debug\CommonNews.Services.Data.Tests.dll src\Tests\CommonNews.Data.Tests\bin\Debug\CommonNews.Data.Tests.dll src\Tests\CommonNews.Web.Tests\bin\Debug\CommonNews.Web.Tests.dll " -output:cover.xml
+        - src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]* -[CommonNews.Web.Infrastructure*]* -[*]*.App_Start* -[*]*Nowo* -[*]*SeedSampleData*" -target:"src\packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single src\Tests\CommonNews.Services.Data.Tests\bin\Debug\CommonNews.Services.Data.Tests.dll src\Tests\CommonNews.Data.Tests\bin\Debug\CommonNews.Data.Tests.dll src\Tests\CommonNews.Web.Tests\bin\Debug\CommonNews.Web.Tests.dll " -output:cover.xml
 
         - src\packages\coveralls.io.1.4.2\tools\coveralls.net.exe --opencover cover.xml

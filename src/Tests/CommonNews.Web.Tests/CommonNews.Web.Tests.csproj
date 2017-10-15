@@ -149,9 +149,13 @@
   <ItemGroup>
     <Compile Include="Controllers.Tests\AccountControllerTests.cs" />
     <Compile Include="Controllers.Tests\AdminUsersControllerTests.cs" />
+    <Compile Include="Controllers.Tests\PostsControllerTests.cs" />
+    <Compile Include="Controllers.Tests\MyPostsControllerTests.cs" />
+    <Compile Include="Controllers.Tests\CommentsControllerTests.cs" />
     <Compile Include="Controllers.Tests\CategoriesControllerTests.cs" />
     <Compile Include="Controllers.Tests\HomeControllerTests.cs" />
     <Compile Include="Controllers.Tests\ManageControllerTests.cs" />
+    <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels.Tests\AccountViewModelsTests.cs" />
     <Compile Include="ViewModels.Tests\AdminUsersViewModelTests.cs" />
@@ -191,6 +195,10 @@
     <ProjectReference Include="..\..\Web\CommonNews.Web\CommonNews.Web.csproj">
       <Project>{67cc40ff-4933-4f83-810e-357e6bc8b973}</Project>
       <Name>CommonNews.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonNews.Data.Tests\CommonNews.Data.Tests.csproj">
+      <Project>{83821230-F03D-4B35-940C-FA02B5F756E6}</Project>
+      <Name>CommonNews.Data.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

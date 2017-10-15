@@ -12,6 +12,7 @@ namespace CommonNews.Web.App_Start
     using Data.Common.Contracts;
     using Data.Models;
     using Identity;
+    using Infrastructure.Mapping;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security;
@@ -22,7 +23,7 @@ namespace CommonNews.Web.App_Start
     using Ninject.Web.Common;
     using Services.Data;
     using Services.Data.Common.Contracts;
-    using Infrastructure.Mapping;
+
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
@@ -95,6 +96,8 @@ namespace CommonNews.Web.App_Start
             kernel.Bind<ApplicationSignInManager>().ToSelf();
 
             kernel.Bind<IMapper>().ToMethod(ctx => AutoMapperConfig.Configuration.CreateMapper()).InSingletonScope();
+
+            // kernel.Load(new AutoMapperModule());
         }
     }
 }

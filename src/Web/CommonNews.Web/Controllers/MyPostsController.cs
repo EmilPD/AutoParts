@@ -38,19 +38,13 @@
         public ActionResult Index(int? page, PageViewModel<PostViewModel> pageViewModel)
         {
             var userId = this.User.Identity.GetUserId();
-            var posts = this.postsService
-                .GetAll()
-                .Where(x => x.Author.Id == userId)
-                .Include(x => x.Author)
-                .Include(x => x.Category)
-                .AsEnumerable();
+            var posts = this.postsService.GetAll().Where(x => x.Author.Id == userId)
+                .Include(x => x.Author).Include(x => x.Category).AsEnumerable();
 
             var pagination = this.paginationFactory.CreatePagination(posts.Count(), page);
 
-            pageViewModel.Items = this.Mapper
-                .Map<IEnumerable<PostViewModel>>(posts)
-                .Skip((pagination.CurrentPage - 1) * pagination.PageSize)
-                .Take(pagination.PageSize);
+            pageViewModel.Items = this.Mapper.Map<IEnumerable<PostViewModel>>(posts)
+                .Skip((pagination.CurrentPage - 1) * pagination.PageSize).Take(pagination.PageSize);
 
             pageViewModel.Pagination = pagination;
 

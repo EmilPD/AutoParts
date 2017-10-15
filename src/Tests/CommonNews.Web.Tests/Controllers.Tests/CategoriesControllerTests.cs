@@ -1,5 +1,7 @@
 ﻿namespace CommonNews.Web.Tests.Controllers.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using AutoMapper;
     using Data.Models;
@@ -7,6 +9,7 @@
     using NUnit.Framework;
     using Services.Data.Common.Contracts;
     using Web.Controllers;
+    using Web.ViewModels.Post;
 
     [TestFixture]
     public class CategoriesControllerTests
@@ -25,20 +28,33 @@
             Assert.IsInstanceOf<CategoriesController>(controller);
         }
 
-        //[Test]
-        //public void IndexAction_ShouldReturnView()
-        //{
-        //    // Arrange
-        //    var postCategoryServiceMock = new Mock<IDataService<PostCategory>>();
-        //    var mockedMapper = new Mock<IMapper>();
-        //    var controller = new CategoriesController(postCategoryServiceMock.Object, mockedMapper.Object);
-        //    var categoryName = "Fashion";
+        [Test]
+        public void IndexAction_ShouldReturnView()
+        {
+            // Arrange
+            var categoryName = "Fashion";
+            var postViewModelMock = new Mock<PostViewModel>();
+            var postCategoryMock = new PostCategory { Name = categoryName };
 
-        //    // Act
-        //    var result = controller.Index(categoryName) as ViewResult;
+            var listOfCategories = new List<PostCategory>();
+            listOfCategories.Add(postCategoryMock);
 
-        //    // Assert
-        //    Assert.IsInstanceOf<ViewResult>(result);
-        //}
+            var postCategoryServiceMock = new Mock<IDataService<PostCategory>>();
+            postCategoryServiceMock.Setup(x => x.GetAll()).Returns(listOfCategories.AsQueryable());
+
+            var mockedMapper = new Mock<IMapper>();
+            mockedMapper
+                .Setup(x => x.Map<Post, PostViewModel>(It.IsAny<Post>()))
+                .Returns(postViewModelMock.Object);
+
+            var controller = new CategoriesController(
+                postCategoryServiceMock.Object, mockedMapper.Object);
+
+            // Act
+            var result = controller.Index(categoryName) as ViewResult;
+
+            // Assert
+            Assert.IsInstanceOf<ViewResult>(result);
+        }
     }
 }

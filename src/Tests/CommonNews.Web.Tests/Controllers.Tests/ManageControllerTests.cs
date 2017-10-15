@@ -33,10 +33,48 @@
             var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
 
             // Act
-            ManageController manageController = new ManageController(mockedUserManager.Object, mockedSignInManager.Object);
+            var manageController = new ManageController(mockedUserManager.Object, mockedSignInManager.Object);
 
             // Assert
             Assert.IsInstanceOf<ManageController>(manageController);
+        }
+
+        [Test]
+        public void UserManagerGetter_ShouldReturn_InstanceOfApplicationUserManager()
+        {
+            // Arrange
+            var mockedStore = new Mock<IUserStore<ApplicationUser>>();
+            var mockedUserManager = new Mock<ApplicationUserManager>(mockedStore.Object);
+
+            var mockedAuthenticationManager = new Mock<IAuthenticationManager>();
+            var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
+
+            var manageController = new ManageController(mockedUserManager.Object, mockedSignInManager.Object);
+
+            // Act
+            var result = manageController.UserManager;
+
+            // Assert
+            Assert.IsInstanceOf<ApplicationUserManager>(result);
+        }
+
+        [Test]
+        public void SignInManagerGetter_ShouldReturn_InstanceOfApplicationUserManager()
+        {
+            // Arrange
+            var mockedStore = new Mock<IUserStore<ApplicationUser>>();
+            var mockedUserManager = new Mock<ApplicationUserManager>(mockedStore.Object);
+
+            var mockedAuthenticationManager = new Mock<IAuthenticationManager>();
+            var mockedSignInManager = new Mock<ApplicationSignInManager>(mockedUserManager.Object, mockedAuthenticationManager.Object);
+
+            var manageController = new ManageController(mockedUserManager.Object, mockedSignInManager.Object);
+
+            // Act
+            var result = manageController.SignInManager;
+
+            // Assert
+            Assert.IsInstanceOf<ApplicationSignInManager>(result);
         }
 
         //[Test]
