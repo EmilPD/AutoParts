@@ -72,6 +72,7 @@
     <Compile Include="MsSqlDbContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.Tests\EfRepositoryTests.cs" />
+    <Compile Include="SaveContextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CommonNews.Data.Common\CommonNews.Data.Common.csproj">

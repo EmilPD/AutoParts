@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using AutoMapper;
+    using Bytes2you.Validation;
     using Infrastructure.Mapping;
 
     public abstract class BaseController : Controller
@@ -10,6 +11,8 @@
 
         public BaseController(IMapper mapper)
         {
+            Guard.WhenArgument(mapper, "IMapper").IsNull().Throw();
+
             this.Mapper = mapper;
         }
 
@@ -17,15 +20,10 @@
         {
             get
             {
-                if (this.mapper == null)
-                {
-                    this.mapper = AutoMapperConfig.Configuration.CreateMapper();
-                }
-
                 return this.mapper;
             }
 
-            set
+            private set
             {
                 this.mapper = value;
             }

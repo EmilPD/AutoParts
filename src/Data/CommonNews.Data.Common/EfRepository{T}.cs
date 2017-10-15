@@ -24,7 +24,7 @@
             }
         }
 
-        protected IDbSet<T> DbSet { get; }
+        protected virtual IDbSet<T> DbSet { get; }
 
         private MsSqlDbContext Context { get; }
 
@@ -43,10 +43,10 @@
             Guard.WhenArgument(id, "GetById").IsNull().Throw();
 
             var item = this.DbSet.Find(id);
-            if (item.IsDeleted)
-            {
-                return null;
-            }
+            //if (item.IsDeleted)
+            //{
+            //    return null;
+            //}
 
             return item;
         }

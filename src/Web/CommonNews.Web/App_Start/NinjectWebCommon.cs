@@ -22,7 +22,7 @@ namespace CommonNews.Web.App_Start
     using Ninject.Web.Common;
     using Services.Data;
     using Services.Data.Common.Contracts;
-
+    using Infrastructure.Mapping;
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
@@ -90,11 +90,11 @@ namespace CommonNews.Web.App_Start
             kernel.Bind(typeof(DbContext), typeof(MsSqlDbContext)).To<MsSqlDbContext>().InRequestScope();
             kernel.Bind(typeof(IEfRepository<>)).To(typeof(EfRepository<>)).InRequestScope();
             kernel.Bind<ISaveContext>().To<SaveContext>().InRequestScope();
-            kernel.Bind<IMapper>().To<Mapper>().InSingletonScope();
-            kernel.Bind<Mapper>().ToSelf();
             kernel.Bind<IPaginationFactory>().ToFactory().InSingletonScope();
             kernel.Bind<ApplicationUserManager>().ToSelf();
             kernel.Bind<ApplicationSignInManager>().ToSelf();
+
+            kernel.Bind<IMapper>().ToMethod(ctx => AutoMapperConfig.Configuration.CreateMapper()).InSingletonScope();
         }
     }
 }

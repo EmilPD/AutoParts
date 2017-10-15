@@ -2,18 +2,29 @@
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Validation;
     using System.Linq;
+    using Bytes2you.Validation;
+    using Contracts;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
     using Models.Contracts;
 
-    public class MsSqlDbContext : IdentityDbContext<ApplicationUser>
+    public class MsSqlDbContext : IdentityDbContext<ApplicationUser>/*, IMsSqlDbContext*/
     {
+        //private IStateFactory stateFactory;
+
         public MsSqlDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        //public MsSqlDbContext(IStateFactory stateFactory)
+        //    : base("MeetMeDB")
+        //{
+        //    Guard.WhenArgument(stateFactory, "StateFactory").IsNull().Throw();
+
+        //    this.stateFactory = stateFactory;
+        //}
 
         public virtual IDbSet<Post> Posts { get; set; }
 
@@ -50,6 +61,12 @@
         //{
         //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<MsSqlDbContext, Configuration>());
         //    base.OnModelCreating(modelBuilder);
+        //}
+
+        //public IEntryState<T> GetState<T>(T entity)
+        //    where T : class
+        //{
+        //    return this.stateFactory.CreateState(this.Entry(entity));
         //}
 
         private void ApplyAuditInfoRules()
