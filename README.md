@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/aop2ll93beo25gmv?svg=true)](https://ci.appveyor.com/project/EmilPD/common-news)
+п»ї[![Build status](https://ci.appveyor.com/api/projects/status/aop2ll93beo25gmv?svg=true)](https://ci.appveyor.com/project/EmilPD/common-news)
 [![Coverage Status](https://coveralls.io/repos/github/EmilPD/Common-News/badge.svg?branch=master)](https://coveralls.io/github/EmilPD/Common-News?branch=master)
 
 # ASP.NET-MVC Project
@@ -10,7 +10,7 @@
 
 | Name | Telerik Student system username |
 |:----:|:-----------------------:|
-| [Емил Димитров](https://github.com/EmilPD) | qwerty123 |
+| [Р•РјРёР» Р”РёРјРёС‚СЂРѕРІ](https://github.com/EmilPD) | qwerty123 |
 
 
 ## Functionalities
