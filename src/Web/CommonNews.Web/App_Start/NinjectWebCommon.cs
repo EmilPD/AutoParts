@@ -96,8 +96,6 @@ namespace CommonNews.Web.App_Start
             kernel.Bind<ApplicationSignInManager>().ToSelf();
 
             kernel.Bind<IMapper>().ToMethod(ctx => AutoMapperConfig.Configuration.CreateMapper()).InSingletonScope();
-
-            // kernel.Load(new AutoMapperModule());
         }
     }
 }
